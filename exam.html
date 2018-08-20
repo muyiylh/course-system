@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html ng-app="exam" ng-controller="ExamController">
+<head>
+    <!-- <base href="/"> -->
+    <base href="">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>管院教研专网应用软件系统</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="./plugins/bootstrap/css/bootstrap.css">
+     <link rel="stylesheet" href="./plugins/iCheck/square/blue.css">
+    <!-- <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap-table.css"> -->
+<link rel="stylesheet" href="css/exam.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+      <link rel="stylesheet" href="css/icomoon.css">
+  <!--   <link rel="stylesheet" href="plugins/treeTable/themes/vsStyle/treeTable.min.css"> -->
+    <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+
+    <!--<script src="http://cdn.bootcss.com/angular.js/1.5.8/angular.js"></script>-->
+<!--     <script src="org/cboard/Settings.js"></script> -->
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-ui-router.min.js"></script>
+<!--     <script src="lib/angular-md5.min.js"></script> -->
+ <!--    <script src="lib/angular-drag-and-drop-lists.js"></script> -->
+  <!--   <script src="lib/angular-sanitize.min.js"></script>-->
+
+    <script src="lib/ui-bootstrap-tpls-2.1.3.min.js"></script> 
+<!--     <script src="lib/angular-translate.js"></script>
+    <script src="lib/angular-translate-loader-partial.js"></script> -->
+<!-- 
+    <script src="lib/underscore-min.js"></script> -->
+<!--     <script src="lib/numbro.min.js"></script>
+    <script src="lib/ui-select.min.js"></script> -->
+
+<!--     <script src="plugins/jQueryUI/jquery-ui.min.js"></script> -->
+<!--     <script type="text/javascript" src="plugins/angular-ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="plugins/angular-ueditor/ueditor.all.js"></script>
+    <script src="plugins/angular-ueditor/angular-ueditor.min.js"></script> -->
+    <!-- Bootstrap 3.3.6 -->
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="plugins/iCheck/iCheck.min.js"></script>
+<!--     <script src="lib/jquery.ba-resize.js"></script>
+<script type="text/javascript" src="/teacher/static/js/ueditor-jh/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<!-- <script type="text/javascript" src="plugins/ueditor-jh/ueditor.all.js"></script> -->
+
+    <!-- <script src="plugins/ace/ace.js"></script> -->
+    <!-- <script src="plugins/ui-ace/ui-ace.min.js"></script> --> 
+
+<script src="plugins/angular-ueditor/ueditor.config.js"></script>
+<script src="plugins/angular-ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="plugins/angular-ueditor/equation-editor-master/addKityFormulaDialog.js"></script>
+<script type="text/javascript" charset="utf-8" src="plugins/angular-ueditor/equation-editor-master/getKfContent.js"></script>
+<script type="text/javascript" charset="utf-8" src="plugins/angular-ueditor/equation-editor-master/defaultFilterFix.js"></script>
+<script src="plugins/angular-ueditor/angular-ueditor.js"></script>
+    <!-- <script src="plugins/angular-auto-validate/dist/jcs-auto-validate.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="css/select.css"> -->
+    <style>
+        .modal-fit .modal-dialog {
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            padding: 50px;
+        }
+		.default-zone .col-sm-3{
+			width:25% !important;
+		}
+        .modal-fit .modal-body {
+            height: calc(100vh - 200px);
+            overflow: auto;
+        }
+
+        @media (min-width: 768px) {
+            .modal-fit .modal-dialog {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <div class="content-wrapper container">
+       <div class="sider-wrap" ng-style="sideStyle" ng-if="examStatus == 'exam'">
+           <div class="title">答题卡</div>
+           <div class="clock">
+               <span class="fa fa-clock-o"></span>
+               <div>时间：<span class="time">17分45秒</span></div>
+           </div>
+           <div class="subject-wrap" ng-repeat="exam in examines.data">
+               <div class="subject-type clearfix">
+                   <div class="title">{{exam.title}}</div>
+                   <div class="icon"><span class="fa fa-chevron-down"></span></div>
+               </div>
+               <div class="subject-no">
+                   <ul class="clearfix">
+                       <li ng-repeat="examNo in exam.data"><a  ng-click="link(exam.examType,examNo.id,1)" class="number_{{exam.examType}}_{{examNo.id}}" ng-init="p_index=$index">{{p_index+1}}</a></li>
+                   </ul>
+               </div>
+            </div>
+            <div class="btn-box">
+                <a class="btn" ng-click="submit()">我要交卷</a>
+            </div>
+   
+       </div>
+       <div class="sider-wrap" ng-style="sideStyle"  ng-if="examStatus == 'result'">
+           <div class="title">答题卡</div>
+           <div class="subject-wrap" ng-repeat="exam in examines.data">
+               <div class="subject-type clearfix">
+                   <div class="title">{{exam.title}}</div>
+                   <div class="icon"><span class="fa fa-chevron-down"></span></div>
+               </div>
+               <div class="subject-no">
+                   <ul class="clearfix">
+                       <li ng-repeat="examNo in exam.data"><a ng-click="link(exam.examType,examNo.id,2)" class="number_{{exam.examType}}_{{examNo.id}}" ng-init="p_index=$index">{{p_index+1}}</a>
+                          <div class="icon-answer">
+                          <span class="icon fa fa-check" ng-if="examNo.result == 'right'"></span>
+                          <span class="icon fa fa-close" ng-if="examNo.result == 'error'"></span>
+                          </div>
+                       </li>
+                   </ul>
+               </div>
+            </div>
+         <!--    <div class="btn-box">
+                <a class="btn" ng-click="submit()">我要交卷</a>
+            </div> -->
+   
+       </div>
+       <div class="content-wrap" ng-style="contentStyle" ng-if="examStatus == 'exam'">
+           <div class="title">{{examines.courseTitle}} > {{examines.examTitle}}</div>
+           <div class="exam-box">
+               <div class="exam-content" ng-repeat ="exam in examines.data">
+                   <div class="title" ng-init="parent=$parent">{{exam.title}}({{exam.desc}})</div>
+                   <div class="exam-subject" ng-repeat="subject in exam.data">
+                       <div ng-init="p_index=$index" id="{{exam.examType}}_{{subject.id}}_box1">{{p_index+1}}.{{subject.subject}}</div>
+                       <ul ng-if="exam.examType == 'sigle' ||exam.examType == 'TFNG'">
+                           <li ng-repeat="option in subject.options"><span><input type="radio" name="{{exam.examType}}_{{subject.id}}"  ng-click="checkRadio(exam.examType,subject.id)" value="{{option.id}}" /></span>&nbsp;{{option.name}}</li>
+                       </ul>
+                       <ul ng-if="exam.examType == 'multiple'">
+                           <li ng-repeat="option in subject.options"><span><input type="checkbox" name="{{exam.examType}}_{{subject.id}}" ng-checked="isSelected(exam.examType,subject.id,option.id)" ng-click="updateSelection($event,exam.examType,subject.id,option.id)" value="{{option.id}}"/></span><span class="answer">{{option.name}}</span></li>
+                       </ul>
+                       <ul ng-if="exam.examType == 'filling'">
+                           <li>
+                           <!-- <textarea class="form-control"  name="{{exam.examType}}_{{subject.id}}" value=""></textarea> -->
+                                     <div  class="ueditor" ready="ready" ng-model="parent.filling[subject.id]" config="{toolbars: [['fullscreen', 'source', '|','bold', 'italic', 'underline', '|', 'fontsize', '|', 'kityformula', 'preview']]}"></div>
+                           </li>
+                       </ul>
+                       <ul ng-if="exam.examType == 'SAQ'">
+                           <li ><textarea class="form-control"  name="{{exam.examType}}_{{subject.id}}" value=""></textarea></li>
+                       </ul>
+                   </div>
+               
+               </div>
+              
+           </div>
+           <div class="btn-box" ng-if="examStatus == 'exam'">
+                <a class="btn">我要交卷</a>
+            </div>
+       </div>
+       <div class="content-wrap" ng-style="contentStyle" ng-if="examStatus == 'result'">
+           <div class="title">总分: {{examines.total}}</div>
+           <div class="" style="padding-left:10px;padding-right:10px;">教师评语: {{examines.comment}}</div>
+           <div class="exam-box">
+               <div class="exam-content" ng-repeat ="exam in examines.data">
+                   <div class="title" ng-init="parent=$parent">{{exam.title}}({{exam.desc}})</div>
+                   <div class="exam-subject" ng-repeat="subject in exam.data">
+                       <div ng-init="p_index=$index" id="{{exam.examType}}_{{subject.id}}_box2" >{{p_index+1}}.{{subject.subject}}</div>
+                       <ul ng-if="exam.examType == 'sigle' ||exam.examType == 'TFNG' || exam.examType == 'multiple'">
+                           <li ng-repeat="option in subject.options">
+                              {{option.name}}
+                            </li>
+                            <div class="answer-tip">
+                              <div>您的答案是：{{subject.answer}}</div>
+                              <div>标准答案是：{{subject.standardAnswer}}&nbsp;&nbsp;回答：
+                                  <span class="icon  fa fa-check" ng-if="subject.result == 'right'"></span>
+                                  <span class="icon  fa fa-close" ng-if="subject.result == 'error'"></span>
+                              </div>
+                            </div>
+                            
+                       </ul>
+                   <!--     <ul ng-if="exam.examType == 'multiple'">
+                           <li ng-repeat="option in subject.options"><span><input type="checkbox" name="{{exam.examType}}_{{subject.id}}" ng-checked="isSelected(exam.examType,subject.id,option.id)" ng-click="updateSelection($event,exam.examType,subject.id,option.id)" value="{{option.id}}"/></span><span class="answer">{{option.name}}</span></li>
+                       </ul> -->
+                       <ul ng-if="exam.examType == 'filling' || exam.examType == 'SAQ'">
+                           <li>
+                              <div class="answer-box">{{subject.answer}}</div>
+                         <!--   <!-- <textarea class="form-control"  name="{{exam.examType}}_{{subject.id}}" value=""></textarea> -->
+                                    <!--  <div  class="ueditor" ready="ready" ng-model="parent.filling[subject.id]" config="{toolbars: [['fullscreen', 'source', '|','bold', 'italic', 'underline', '|', 'fontsize', '|', 'kityformula', 'preview']]}"></div> -->                      
+                            </li>
+                            <div class="answer-tip">
+                              <div>标准答案是：{{subject.standardAnswer}}&nbsp;&nbsp;
+                              </div>
+                              <div>
+                                回答：
+                                  <span class="icon  fa fa-check" ng-if="subject.result == 'right'"></span>
+                                  <span class="icon  fa fa-close" ng-if="subject.result == 'error'"></span>
+                              </div>
+                            </div>
+                       </ul>
+                       <!-- <ul ng-if="exam.examType == 'SAQ'">
+                           <li ><textarea class="form-control"  name="{{exam.examType}}_{{subject.id}}" value=""></textarea></li>
+                       </ul> -->
+                   </div>
+               
+               </div>
+              
+           </div>
+           <div class="btn-box" ng-if="examStatus == 'exam'">
+                <a class="btn">我要交卷</a>
+            </div>
+       </div>
+    </div>
+</div>
+<!-- ./wrapper -->
+
+
+
+
+
+<!-- AngularJS-->
+<!-- <script src="org/student/ng-app.js"></script>
+<script src="org/student/ng-config.js"></script> -->
+
+
+<script src="org/student/controller/exam/examController.js"></script>
+<script src="org/student/service/util/ModalUtilsExam.js"></script>
+<!-- <script src="org/student/controller/course/courseController.js"></script>
+<script src="org/student/controller/course/courseDetailController.js"></script>
+<script src="org/student/controller/teacher/teacherController.js"></script>
+<script src="org/student/directive/pagination.js"></script>
+<script src="org/student/directive/directive.js"></script>
+<!-- <script src="plugins/crossTable/plugin.js"></script>
+<script src="plugins/FineMap/plugin.js"></script>
+<script src="plugins/FineMap/plugin.js"></script>
+<script src="plugins/My97DatePicker/lang/zh-cn.js"></script>
+<script src="plugins/My97DatePicker/WdatePicker.js"></script> -->
+<!--<script src="plugins/My97DatePicker/calendar.js"></script>-->
+
+
+
+
+
+
+</body>
+</html>

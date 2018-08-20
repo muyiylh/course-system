@@ -1,0 +1,32 @@
+<div>
+	 <table class="table">
+	 	<thead>
+	 		<tr>
+	 			<td>学号</td>
+	 			<td>学员</td>
+	 			<td>课程考勤<br>
+	 			(10%)</td>
+	 			<td>课后作业<br>(10%)</td>
+	 			<td>研究报告<br>(10%)</td>
+	 			<td>课程实验<br>(10%)</td>
+	 			<td>随堂测试<br>(10%)</td>
+	 			<td>课程考试<br>(50%)</td>
+	 			<td>课程成绩</td>
+	 		</tr>
+	 	</thead>
+	 	<tbody>
+	 		<tr ng-repeat="grade in grades">
+	 			<td>{{grade.no}}</td>
+	 			<td>{{grade.name}}</td>
+	 			<td>{{grade.checking}}</td>
+	 			<td>{{grade.task}}</td>
+	 			<td>{{grade.report}}</td>
+	 			<td>{{grade.experiment}}</td>
+	 			<td>{{grade.test}}</td>
+	 			<td>{{grade.exam}}</td>
+	 			<td>{{grade.score}}</td>
+	 		</tr>
+	 	</tbody>
+	 </table>
+	  <s-pagination conf="gradeConf"></s-pagination>
+</div>

@@ -1,0 +1,40 @@
+{"data":[{
+	"id":1,
+	"title":"1.1 计算机网络概述",
+	"children":[
+	{
+		"id":3,
+		"type":"img",
+		"title":"计算机网络发展史.zip"
+	},
+	{
+		"id":4,
+		"type":"voice",
+		"title":"计算机网络发展史.mp3"
+	},
+	{
+		"id":5,
+		"type":"zip",
+		"title":"计算机网络发展史.zip"
+	},
+	{
+		"id":6,
+		"type":"pdf",
+		"title":"计算机网络发展史.zip"
+	},
+	{
+		"id":6,
+		"type":"doc",
+		"title":"计算机网络发展史.zip"
+	}
+	]
+
+
+},
+{
+	"id":3,
+	"title":"1.2 计算机网络发展史2",
+	"children":[]
+
+}
+],"title":"第一章计算机网络概述"}

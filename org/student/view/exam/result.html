@@ -1,0 +1,76 @@
+ <div class="sider-wrap" ng-style="sideStyle"  ng-if="examStatus == 'result'">
+           <div class="title">答题卡</div>
+           <div class="subject-wrap" ng-repeat="exam in examines.data">
+               <div class="subject-type clearfix">
+                   <div class="title">{{exam.title}}</div>
+                   <div class="icon"><span class="fa fa-chevron-down"></span></div>
+               </div>
+               <div class="subject-no">
+                   <ul class="clearfix">
+                       <li ng-repeat="examNo in exam.data"><a ng-click="link(exam.examType,examNo.id,2)" class="number_{{exam.examType}}_{{examNo.id}}" ng-init="p_index=$index">{{p_index+1}}</a>
+                          <div class="icon-answer">
+                          <span class="icon fa fa-check" ng-if="examNo.result == 'right'"></span>
+                          <span class="icon fa fa-close" ng-if="examNo.result == 'error'"></span>
+                          </div>
+                       </li>
+                      
+                   </ul>
+               </div>
+            </div>
+         <!--    <div class="btn-box">
+                <a class="btn" ng-click="submit()">我要交卷</a>
+            </div> -->
+   
+       </div>
+          <div class="content-wrap" ng-style="contentStyle" ng-if="examStatus == 'result'">
+           <div class="title">总分: {{examines.total}}</div>
+           <div class="" style="padding-left:10px;padding-right:10px;">教师评语: {{examines.comment}}</div>
+           <div class="exam-box">
+               <div class="exam-content" ng-repeat ="exam in examines.data">
+                   <div class="title" ng-init="parent=$parent">{{exam.title}}({{exam.desc}})</div>
+                   <div class="exam-subject" ng-repeat="subject in exam.data">
+                       <div ng-init="p_index=$index" id="{{exam.examType}}_{{subject.id}}_box2" >{{p_index+1}}.{{subject.subject}}</div>
+                       <ul ng-if="exam.examType == 'sigle' ||exam.examType == 'TFNG' || exam.examType == 'multiple'">
+                           <li ng-repeat="option in subject.options">
+                              {{option.name}}
+                            </li>
+                            <div class="answer-tip">
+                              <div>您的答案是：{{subject.answer}}</div>
+                              <div>标准答案是：{{subject.standardAnswer}}&nbsp;&nbsp;回答：
+                                  <span class="icon  fa fa-check" ng-if="subject.result == 'right'"></span>
+                                  <span class="icon  fa fa-close" ng-if="subject.result == 'error'"></span>
+                              </div>
+                            </div>
+                            
+                       </ul>
+                   <!--     <ul ng-if="exam.examType == 'multiple'">
+                           <li ng-repeat="option in subject.options"><span><input type="checkbox" name="{{exam.examType}}_{{subject.id}}" ng-checked="isSelected(exam.examType,subject.id,option.id)" ng-click="updateSelection($event,exam.examType,subject.id,option.id)" value="{{option.id}}"/></span><span class="answer">{{option.name}}</span></li>
+                       </ul> -->
+                       <ul ng-if="exam.examType == 'filling' || exam.examType == 'SAQ'">
+                           <li>
+                              <div class="answer-box">{{subject.answer}}</div>
+                         <!--   <!-- <textarea class="form-control"  name="{{exam.examType}}_{{subject.id}}" value=""></textarea> -->
+                                    <!--  <div  class="ueditor" ready="ready" ng-model="parent.filling[subject.id]" config="{toolbars: [['fullscreen', 'source', '|','bold', 'italic', 'underline', '|', 'fontsize', '|', 'kityformula', 'preview']]}"></div> -->                      
+                            </li>
+                            <div class="answer-tip">
+                              <div>标准答案是：{{subject.standardAnswer}}&nbsp;&nbsp;
+                              </div>
+                              <div>
+                                回答：
+                                  <span class="icon  fa fa-check" ng-if="subject.result == 'right'"></span>
+                                  <span class="icon  fa fa-close" ng-if="subject.result == 'error'"></span>
+                              </div>
+                            </div>
+                       </ul>
+                       <!-- <ul ng-if="exam.examType == 'SAQ'">
+                           <li ><textarea class="form-control"  name="{{exam.examType}}_{{subject.id}}" value=""></textarea></li>
+                       </ul> -->
+                   </div>
+               
+               </div>
+              
+           </div>
+           <div class="btn-box" ng-if="examStatus == 'exam'">
+                <a class="btn">我要交卷</a>
+            </div>
+       </div>

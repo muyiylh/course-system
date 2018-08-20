@@ -1,0 +1,100 @@
+{"data":[
+	{
+	"id":301,
+	"title":"晒晒学33",
+	"type":"catalog",
+	"uploadTime":"2015-03-02 12:34",
+	"size":"-"
+},
+
+{
+	"id":103,
+	"title":"学习资料.zip",
+	"type":"zip",
+	"uploadTime":"2015-03-02 12:34",
+	"size":"-"
+	
+},
+
+{
+	"id":3,
+	"title":"晒晒学堂说减肥那期活动的礼物.pdf",
+	"type":"pdf",
+	"uploadTime":"2015-03-02 12:34",
+	"size":"20M"
+
+},
+{
+	"id":4,
+	"title":"礼物.doc",
+	"type":"word",
+	"uploadTime":"2015-03-02 12:34",
+	"size":"23M"
+
+},
+{
+	"id":5,
+	"title":"晒晒学堂.png",
+	"type":"img",
+	"uploadTime":"2015-03-02 12:34",
+	"size":"34M"
+
+},
+{
+	"id":6,
+	"title":"晒晒.mp3",
+	"type":"mp3",
+	"uploadTime":"2015-03-02 12:34",
+	"size":"12M"
+	
+},
+{
+	"id":7,
+	"title":"test.mp4",
+	"type":"video",
+	"uploadTime":"2015-03-02 12:34",
+	"size":"345M"
+
+},
+{
+	"id":8,
+	"title":"晒晒学堂说减肥那期活动的礼物.xls",
+	"type":"xls",
+	"uploadTime":"2015-03-02 12:34",
+	"size":"34M"
+
+},
+{
+	"id":9,
+	"title":"晒晒学堂说减肥那期活动的礼物.txt",
+	"type":"txt",
+	"uploadTime":"2015-03-02 12:34",
+	"size":"12M"
+
+},
+{
+	"id":10,
+	"title":"test.ppt",
+	"type":"ppt",
+	"uploadTime":"2015-03-02 12:34",
+	"size":"390M"
+
+},
+{
+	"id":17,
+	"title":"test.sql",
+	"type":"code",
+	"uploadTime":"2015-03-02 12:34",
+	"size":"390M"
+
+},
+{
+	"id":18,
+	"title":"test.html",
+	"type":"other",
+	"uploadTime":"2015-03-02 12:34",
+	"size":"390M"
+
+}
+],"pageList":"10",
+"total":"11","pId":1}

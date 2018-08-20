@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Equation Editor</title>
+    <!-- <link href="src/Fonts/TeX/font.css" rel="stylesheet" type="text/css"/> -->
+  <link href="src/app/css/equationEditor.css" rel="stylesheet" type="text/css"/>
+  <style type="text/css">
+    .primary {
+       background-color: #29e;background-position: 0 -28px;border: 1px solid #29e;border-radius: 3px;color: #fff;margin-top: 5px;padding: 2px;
+    }
+    
+    i.menu-remove {
+        background: rgba(0, 0, 0, 0) url("../../img/menu-remove.png") no-repeat scroll 0 0;
+        height: 20px;
+        position: absolute;
+        right: 2px;
+        top: -45px;
+        width: 20px;
+        z-index: 100000000;
+    }
+  </style>
+  <script src="src/lib/jquery-2.0.0.js"></script>
+  <script src="src/lib/underscore-1.6.0.js"></script>
+  <script src="src/lib/mousetrap-1.4.6.js"></script>
+  <script src="src/lib/spin.min.js"></script>
+  <script src="src/app/js/webfont.js"></script>
+  <script src="src/app/js/canvg.js"></script>
+  <script src="src/app/js/html2canvas.js"></script>
+  <script src="src/app/js/property.js"></script>
+  <script src="src/app/js/init.js"></script>
+  <script src="src/app/js/fontMetrics.js"></script>
+  <script src="src/app/js/equation-components/misc/equationComponent.js"></script>
+  <script src="src/app/js/equation-components/misc/boundEquationComponent.js"></script>
+  <script src="src/app/js/equation.js"></script>
+  <script src="src/app/js/equation-components/dom/equationDom.js"></script>
+  <script src="src/app/js/equation-components/containers/container.js"></script>
+  <script src="src/app/js/equation-components/dom/containerDom.js"></script>
+  <script src="src/app/js/equation-components/wrappers/wrapper.js"></script>
+  <script src="src/app/js/equation-components/dom/wrapperDom.js"></script>
+  <script src="src/app/js/equation-components/misc/symbol.js"></script>
+  <script src="src/app/js/equation-components/wrappers/symbolWrapper.js"></script>
+  <script src="src/app/js/equation-components/wrappers/operatorWrapper.js"></script>
+  <script src="src/app/js/equation-components/wrappers/emptyContainerWrapper.js"></script>
+  <script src="src/app/js/equation-components/wrappers/topLevelEmptyContainerWrapper.js"></script>
+  <script src="src/app/js/equation-components/misc/topLevelEmptyContainerMessage.js"></script>
+  <script src="src/app/js/equation-components/wrappers/squareEmptyContainerWrapper.js"></script>
+  <script src="src/app/js/equation-components/containers/squareEmptyContainer.js"></script>
+  <script src="src/app/js/equation-components/wrappers/squareEmptyContainerFillerWrapper.js"></script>
+  <script src="src/app/js/equation-components/wrappers/stackedFractionWrapper.js"></script>
+  <script src="src/app/js/equation-components/containers/stackedFractionNumeratorContainer.js"></script>
+  <script src="src/app/js/equation-components/containers/stackedFractionDenominatorContainer.js"></script>
+  <script src="src/app/js/equation-components/misc/stackedFractionHorizontalBar.js"></script>
+  <script src="src/app/js/equation-components/wrappers/superscriptWrapper.js"></script>
+  <script src="src/app/js/equation-components/containers/superscriptContainer.js"></script>
+  <script src="src/app/js/equation-components/wrappers/subscriptWrapper.js"></script>
+  <script src="src/app/js/equation-components/containers/subscriptContainer.js"></script>
+  <script src="src/app/js/equation-components/wrappers/superscriptAndSubscriptWrapper.js"></script>
+  <script src="src/app/js/equation-components/wrappers/squareRootWrapper.js"></script>
+  <script src="src/app/js/equation-components/misc/squareRootOverBar.js"></script>
+  <script src="src/app/js/equation-components/misc/squareRootRadical.js"></script>
+  <script src="src/app/js/equation-components/misc/squareRootDiagonal.js"></script>
+  <script src="src/app/js/equation-components/containers/squareRootRadicandContainer.js"></script>
+  <script src="src/app/js/equation-components/wrappers/nthRootWrapper.js"></script>
+  <script src="src/app/js/equation-components/misc/nthRootOverBar.js"></script>
+  <script src="src/app/js/equation-components/misc/nthRootRadical.js"></script>
+  <script src="src/app/js/equation-components/misc/nthRootDiagonal.js"></script>
+  <script src="src/app/js/equation-components/containers/nthRootRadicandContainer.js"></script>
+  <script src="src/app/js/equation-components/containers/nthRootDegreeContainer.js"></script>
+  <script src="src/app/js/equation-components/wrappers/bracketWrapper.js"></script>
+  <script src="src/app/js/equation-components/misc/bracket.js"></script>
+  <script src="src/app/js/equation-components/misc/wholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/topBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/middleBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/bottomBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftParenthesisBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightParenthesisBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftParenthesisWholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftParenthesisTopBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftParenthesisMiddleBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftParenthesisBottomBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightParenthesisWholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightParenthesisTopBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightParenthesisMiddleBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightParenthesisBottomBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftSquareBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftSquareWholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftSquareTopBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftSquareMiddleBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftSquareBottomBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightSquareBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightSquareWholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightSquareTopBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightSquareMiddleBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightSquareBottomBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftCurlyBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftCurlyWholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftCurlyTopBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftCurlyMiddleBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftCurlyBottomBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightCurlyBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightCurlyWholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightCurlyTopBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightCurlyMiddleBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightCurlyBottomBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftAngleBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftAngleWholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightAngleBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightAngleWholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftFloorBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftFloorWholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftFloorMiddleBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftFloorBottomBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightFloorBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightFloorWholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightFloorMiddleBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightFloorBottomBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftCeilBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftCeilWholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftCeilTopBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftCeilMiddleBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightCeilBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightCeilWholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightCeilTopBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightCeilMiddleBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftAbsValBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightAbsValBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftAbsValWholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftAbsValMiddleBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightAbsValWholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightAbsValMiddleBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftNormBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightNormBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftNormWholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/leftNormMiddleBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightNormWholeBracket.js"></script>
+  <script src="src/app/js/equation-components/misc/rightNormMiddleBracket.js"></script>
+  <script src="src/app/js/equation-components/wrappers/bracketPairWrapper.js"></script>
+  <script src="src/app/js/equation-components/containers/bracketContainer.js"></script>
+  <script src="src/app/js/equation-components/wrappers/bigOperatorWrapper.js"></script>
+  <script src="src/app/js/equation-components/containers/bigOperatorUpperLimitContainer.js"></script>
+  <script src="src/app/js/equation-components/containers/bigOperatorLowerLimitContainer.js"></script>
+  <script src="src/app/js/equation-components/containers/bigOperatorOperandContainer.js"></script>
+  <script src="src/app/js/equation-components/misc/bigOperatorSymbol.js"></script>
+  <script src="src/app/js/equation-components/misc/sumBigOperatorSymbol.js"></script>
+  <script src="src/app/js/equation-components/misc/bigCapBigOperatorSymbol.js"></script>
+  <script src="src/app/js/equation-components/misc/bigCupBigOperatorSymbol.js"></script>
+  <script src="src/app/js/equation-components/misc/bigSqCapBigOperatorSymbol.js"></script>
+  <script src="src/app/js/equation-components/misc/bigSqCupBigOperatorSymbol.js"></script>
+  <script src="src/app/js/equation-components/misc/bigSqCupBigOperatorSymbol.js"></script>
+  <script src="src/app/js/equation-components/misc/prodBigOperatorSymbol.js"></script>
+  <script src="src/app/js/equation-components/misc/coProdBigOperatorSymbol.js"></script>
+  <script src="src/app/js/equation-components/misc/bigVeeBigOperatorSymbol.js"></script>
+  <script src="src/app/js/equation-components/misc/bigWedgeBigOperatorSymbol.js"></script>
+  <script src="src/app/js/equation-components/wrappers/integralWrapper.js"></script>
+  <script src="src/app/js/equation-components/misc/integralSymbol.js"></script>
+  <script src="src/app/js/equation-components/misc/doubleIntegralSymbol.js"></script>
+  <script src="src/app/js/equation-components/misc/tripleIntegralSymbol.js"></script>
+  <script src="src/app/js/equation-components/misc/contourIntegralSymbol.js"></script>
+  <script src="src/app/js/equation-components/misc/contourDoubleIntegralSymbol.js"></script>
+  <script src="src/app/js/equation-components/misc/contourTripleIntegralSymbol.js"></script>
+  <script src="src/app/js/equation-components/containers/integralUpperLimitContainer.js"></script>
+  <script src="src/app/js/equation-components/containers/integralLowerLimitContainer.js"></script>
+  <script src="src/app/js/equation-components/misc/word.js"></script>
+  <script src="src/app/js/equation-components/misc/functionWord.js"></script>
+  <script src="src/app/js/equation-components/wrappers/functionWrapper.js"></script>
+  <script src="src/app/js/equation-components/wrappers/functionLowerWrapper.js"></script>
+  <script src="src/app/js/equation-components/misc/functionLowerWord.js"></script>
+  <script src="src/app/js/equation-components/containers/functionLowerContainer.js"></script>
+  <script src="src/app/js/equation-components/wrappers/logLowerWrapper.js"></script>
+  <script src="src/app/js/equation-components/misc/logLowerWord.js"></script>
+  <script src="src/app/js/equation-components/containers/logLowerContainer.js"></script>
+  <script src="src/app/js/equation-components/wrappers/limitWrapper.js"></script>
+  <script src="src/app/js/equation-components/containers/limitLeftContainer.js"></script>
+  <script src="src/app/js/equation-components/containers/limitRightContainer.js"></script>
+  <script src="src/app/js/equation-components/misc/limitWord.js"></script>
+  <script src="src/app/js/equation-components/misc/limitSymbol.js"></script>
+  <script src="src/app/js/equation-components/wrappers/matrixWrapper.js"></script>
+  <script src="src/app/js/equation-components/containers/matrixContainer.js"></script>
+  <script src="src/app/js/equation-components/wrappers/accentWrapper.js"></script>
+  <script src="src/app/js/equation-components/misc/accentSymbol.js"></script>
+  <script src="src/app/js/equation-components/containers/accentContainer.js"></script>
+  <script src="src/app/js/equation-components/containers/topLevelContainer.js"></script>
+  <script src="src/app/js/blinkingCursor.js"></script>
+  <script src="src/app/js/mouseInteraction.js"></script>
+  <script src="src/app/js/addWrapperUtil.js"></script>
+  <script src="src/app/js/keyboardInteraction.js"></script>
+  <script src="src/app/js/menuInteraction.js"></script>
+  <script src="src/app/js/equationEditor.js"></script>
+  <script src="src/app/js/latexGenerator.js"></script>
+  <!-- 为了点击弹出层确定按钮使用 -->
+  <script src="../dialogs/internal.js"></script>
+  <!-- 为了插入到富文本时使用 -->
+  <script src="kityformula-editor.all.min.js"></script>
+
+</head>
+<body>
+    <input id="hiddenFocusInput" style="width: 0; height: 0; opacity: 0; position: absolute; top: 0; left: 0;" type="text" autocapitalize="off" />
+    
+    <div class="equation-editor" id="equation-editor-div">
+	    <div id="loadingMessageOuter" style="width: 234px; height: 64px;">
+	    	<div id="loadingMessage" class="fontSizeSmaller" style="width: 234px; height: 64px; position: fixed;"></div>
+	    </div>
+    </div>
+    <div style="float: right"><button onclick="saveCustom_gs()" class="primary">保存为自定义公式</button></div>
+    <div class="tabs">
+        <ul class="outer-tab-links tab-links">
+        	<li class="outerTab active"><a href="#custom_gs">自定义公式</a></li>
+            <li class="outerTab"><a href="#common">常用</a></li>
+            <li class="outerTab"><a href="#brackets">括号</a></li>
+            <li class="outerTab"><a href="#symbols">符号</a></li>
+            <li class="outerTab"><a href="#functions">函数</a></li>
+            <li class="outerTab"><a href="#largeOperators">大型运算符</a></li>
+            <li class="outerTab"><a href="#integrals">积分</a></li>
+            <li class="outerTab"><a href="#misc">其他</a></li>
+        </ul>
+     
+        <div class="tab-content" id="tab-content-top">
+        	<div id="custom_gs" class="tab outer active">
+                
+            </div>
+        
+            <div id="common" class="tab outer">
+                <img class="menuItem" id="stackedFractionButton" src="src/MenuImages/png/stackedFraction.png">
+                <img class="menuItem" id="superscriptButton" src="src/MenuImages/png/superscript.png">
+                <img class="menuItem" id="subscriptButton" src="src/MenuImages/png/subscript.png">
+                <img class="menuItem" id="superscriptAndSubscriptButton" src="src/MenuImages/png/superscriptAndSubscript.png">
+                <img class="menuItem" id="superscriptAndSubscript01Button" src="src/MenuImages/png/superscriptAndSubscript01.png">
+                <img class="menuItem" id="squareRootButton" src="src/MenuImages/png/squareRoot.png">
+                <img class="menuItem" id="nthRootButton" height="60" src="src/MenuImages/png/nthRoot.png">
+                <img class="menuItem" id="limitButton" src="src/MenuImages/png/limit.png">
+                <img class="menuItem" id="logLowerButton" height="55" src="src/MenuImages/png/log_n.png">
+                <span class="menuItem MathJax_Main" id="logButton" style="font-size: 45px;">log</span>
+                <span class="menuItem MathJax_Main" id="lnButton" style="font-size: 45px;">ln</span>
+            </div>
+     
+            <div id="brackets" class="tab outer">
+                <ul class="inner-tab-links tab-links">
+                    <li class="innerTab active"><a href="#bracketsSingle">但括号</a></li>
+                    <li class="innerTab"><a href="#bracketsPair">双括号</a></li>
+                </ul>
+                <div class="tab-content tab-content-nested">
+                  <div id="bracketsSingle" class="tab inner active">
+                    <span class="menuItem MathJax_Main" id="leftParenthesisBracketButton" style="font-size: 65px;">&#40;</span>
+                    <span class="menuItem MathJax_Main" id="rightParenthesisBracketButton" style="font-size: 65px;">&#41;</span>
+                    <span class="menuItem MathJax_Main" id="leftSquareBracketButton" style="font-size: 65px;">&#91;</span>
+                    <span class="menuItem MathJax_Main" id="rightSquareBracketButton" style="font-size: 65px;">&#93;</span>
+                    <span class="menuItem MathJax_Main" id="leftCurlyBracketButton" style="font-size: 65px;">&#123;</span>
+                    <span class="menuItem MathJax_Main" id="rightCurlyBracketButton" style="font-size: 65px;">&#125;</span>
+                    
+                    <span class="menuItem MathJax_Main" id="leftAngleBracketButton" style="font-size: 65px;">&#10216;</span>
+                    <span class="menuItem MathJax_Main" id="rightAngleBracketButton" style="font-size: 65px;">&#10217;</span>
+                    <span class="menuItem MathJax_Main" id="leftFloorBracketButton" style="font-size: 65px;">&#8970;</span>
+                    <span class="menuItem MathJax_Main" id="rightFloorBracketButton" style="font-size: 65px;">&#8971;</span>
+                    <span class="menuItem MathJax_Main" id="leftCeilBracketButton" style="font-size: 65px;">&#8968;</span>
+                    <span class="menuItem MathJax_Main" id="rightCeilBracketButton" style="font-size: 65px;">&#8969;</span>
+                  </div>
+                  <div id="bracketsPair" class="tab inner">
+                    <img class="menuItem" id="parenthesesBracketPairButton" src="src/MenuImages/png/parenthesesBracketPair.png">
+                    <img class="menuItem" id="squareBracketPairButton" src="src/MenuImages/png/squareBracketPair.png">
+                    <img class="menuItem" id="curlyBracketPairButton" src="src/MenuImages/png/curlyBracketPair.png">
+                    <img class="menuItem" id="angleBracketPairButton" src="src/MenuImages/png/angleBracketPair.png">
+                    <img class="menuItem" id="floorBracketPairButton" src="src/MenuImages/png/floorBracketPair.png">
+                    <img class="menuItem" id="ceilBracketPairButton" src="src/MenuImages/png/ceilBracketPair.png">
+                    <img class="menuItem" id="absValBracketPairButton" src="src/MenuImages/png/absBracketPair.png">
+                    <img class="menuItem" id="normBracketPairButton" src="src/MenuImages/png/normBracketPair.png">
+                  </div>
+                </div>
+            </div>
+            
+            <div id="symbols" class="tab outer">
+                <ul class="inner-tab-links tab-links">
+                    <li class="innerTab active"><a href="#symbolsOperators">运算符号</a></li>
+                    <li class="innerTab"><a href="#symbolsGreek">希腊符号</a></li>
+                    <li class="innerTab"><a href="#symbolsMisc">其他</a></li>
+                </ul>
+                <div class="tab-content tab-content-nested">
+                  <div id="symbolsOperators" class="tab inner active">
+                  	<span class="menuItem MathJax_Main" id="douhaoButton" style="font-size: 45px;">&#44;</span>
+                  	<span class="menuItem MathJax_Main" id="chengfaButton" style="font-size: 45px;">&lowast;</span>
+                    <span class="menuItem MathJax_Main" id="jiantouButton" style="font-size: 45px;">&rarr;</span>
+                  	<span class="menuItem MathJax_Main" id="chuButton" style="font-size: 45px;">/</span>
+                  	<span class="menuItem MathJax_Main" id="sssButton" style="font-size: 45px;">&ang;</span>
+                    <span class="menuItem MathJax_Main" id="colonButton" style="font-size: 45px;">:</span>
+                    <span class="menuItem MathJax_Main" id="lessThanOrEqualToButton" style="font-size: 45px;">&#x2264;</span>
+                    <span class="menuItem MathJax_Main" id="greaterThanOrEqualToButton" style="font-size: 45px;">&#x2265;</span>
+                    <span class="menuItem MathJax_Main" id="circleOperatorButton" style="font-size: 45px;">&#9702;</span>
+                    <span class="menuItem MathJax_Main" id="approxEqualToButton" style="font-size: 45px;">&#x2248;</span>
+                    <span class="menuItem MathJax_Main" id="belongsToButton" style="font-size: 45px;">&#8712;</span>
+                    <span class="menuItem MathJax_Main" id="timesButton" style="font-size: 45px;">&#215;</span>
+                    <span class="menuItem MathJax_Main" id="pmButton" style="font-size: 45px;">&#177;</span>
+                    <span class="menuItem MathJax_Main" id="wedgeButton" style="font-size: 45px;">&#8743;</span>
+                    <span class="menuItem MathJax_Main" id="veeButton" style="font-size: 45px;">&#8744;</span>
+                    <span class="menuItem MathJax_Main" id="equivButton" style="font-size: 45px;">&#8801;</span>
+                    <span class="menuItem MathJax_Main" id="congButton" style="font-size: 45px;">&#8773;</span>
+                    <span class="menuItem MathJax_Main" id="neqButton" style="font-size: 45px;">&#8800;</span>
+                    <span class="menuItem MathJax_Main" id="simButton" style="font-size: 45px;">&#8764;</span>
+                    <span class="menuItem MathJax_Main" id="proptoButton" style="font-size: 45px;">&#8733;</span>
+                    <span class="menuItem MathJax_Main" id="precButton" style="font-size: 45px;">&#8826;</span>
+                    <span class="menuItem MathJax_Main" id="precEqButton" style="font-size: 45px;">&#10927;</span>
+                    <span class="menuItem MathJax_Main" id="subsetButton" style="font-size: 45px;">&#8834;</span>
+                    <span class="menuItem MathJax_Main" id="subsetEqButton" style="font-size: 45px;">&#8838;</span>
+                    <span class="menuItem MathJax_Main" id="succButton" style="font-size: 45px;">&#8827;</span>
+                    <span class="menuItem MathJax_Main" id="succEqButton" style="font-size: 45px;">&#10928;</span>
+                    <span class="menuItem MathJax_Main" id="perpButton" style="font-size: 45px;">&#8869;</span>
+                    <span class="menuItem MathJax_Main" id="midButton" style="font-size: 45px;">&#8739;</span>
+                    <span class="menuItem MathJax_Main" id="parallelButton" style="font-size: 45px;">&#8741;</span>
+                  </div>
+                  <div id="symbolsGreek" class="tab inner">
+                    <span class="menuItem MathJax_Main" id="gammaUpperButton" style="font-size: 45px;">&#915;</span>
+                    <span class="menuItem MathJax_Main" id="deltaUpperButton" style="font-size: 45px;">&#916;</span>
+                    <span class="menuItem MathJax_Main" id="thetaUpperButton" style="font-size: 45px;">&#920;</span>
+                    <span class="menuItem MathJax_Main" id="lambdaUpperButton" style="font-size: 45px;">&#923;</span>
+                    <span class="menuItem MathJax_Main" id="xiUpperButton" style="font-size: 45px;">&#926;</span>
+                    <span class="menuItem MathJax_Main" id="piUpperButton" style="font-size: 45px;">&#928;</span>
+                    <span class="menuItem MathJax_Main" id="sigmaUpperButton" style="font-size: 45px;">&#931;</span>
+                    <span class="menuItem MathJax_Main" id="upsilonUpperButton" style="font-size: 45px;">&#933;</span>
+                    <span class="menuItem MathJax_Main" id="phiUpperButton" style="font-size: 45px;">&#934;</span>
+                    <span class="menuItem MathJax_Main" id="psiUpperButton" style="font-size: 45px;">&#936;</span>
+                    <span class="menuItem MathJax_Main" id="omegaUpperButton" style="font-size: 45px;">&#937;</span>
+
+                    <span class="menuItem MathJax_MathItalic" id="alphaButton" style="font-size: 45px;">&#945;</span>
+                    <span class="menuItem MathJax_MathItalic" id="betaButton" style="font-size: 45px;">&#946;</span>
+                    <span class="menuItem MathJax_MathItalic" id="gammaButton" style="font-size: 45px;">&#947;</span>
+                    <span class="menuItem MathJax_MathItalic" id="deltaButton" style="font-size: 45px;">&#948;</span>
+                    <span class="menuItem MathJax_MathItalic" id="varEpsilonButton" style="font-size: 45px;">&#949;</span>
+                    <span class="menuItem MathJax_MathItalic" id="epsilonButton" style="font-size: 45px;">&#1013;</span>
+                    <span class="menuItem MathJax_MathItalic" id="zetaButton" style="font-size: 45px;">&#950;</span>
+                    <span class="menuItem MathJax_MathItalic" id="etaButton" style="font-size: 45px;">&#951;</span>
+                    <span class="menuItem MathJax_MathItalic" id="thetaButton" style="font-size: 45px;">&#952;</span>
+                    <span class="menuItem MathJax_MathItalic" id="varThetaButton" style="font-size: 45px;">&#977;</span>
+                    <span class="menuItem MathJax_MathItalic" id="iotaButton" style="font-size: 45px;">&#953;</span>
+                    <span class="menuItem MathJax_MathItalic" id="kappaButton" style="font-size: 45px;">&#954;</span>
+                    <span class="menuItem MathJax_MathItalic" id="lambdaButton" style="font-size: 45px;">&#955;</span>
+                    <span class="menuItem MathJax_MathItalic" id="muButton" style="font-size: 45px;">&#956;</span>
+                    <span class="menuItem MathJax_MathItalic" id="nuButton" style="font-size: 45px;">&#957;</span>
+                    <span class="menuItem MathJax_MathItalic" id="xiButton" style="font-size: 45px;">&#958;</span>
+                    <span class="menuItem MathJax_MathItalic" id="piButton" style="font-size: 45px;">&#960;</span>
+                    <span class="menuItem MathJax_MathItalic" id="varPiButton" style="font-size: 45px;">&#982;</span>
+                    <span class="menuItem MathJax_MathItalic" id="rhoButton" style="font-size: 45px;">&#961;</span>
+                    <span class="menuItem MathJax_MathItalic" id="varRhoButton" style="font-size: 45px;">&#1009;</span>
+                    <span class="menuItem MathJax_MathItalic" id="sigmaButton" style="font-size: 45px;">&#963;</span>
+                    <span class="menuItem MathJax_MathItalic" id="varSigmaButton" style="font-size: 45px;">&#962;</span>
+                    <span class="menuItem MathJax_MathItalic" id="tauButton" style="font-size: 45px;">&#964;</span>
+                    <span class="menuItem MathJax_MathItalic" id="upsilonButton" style="font-size: 45px;">&#965;</span>
+                    <span class="menuItem MathJax_MathItalic" id="varPhiButton" style="font-size: 45px;">&#966;</span>
+                    <span class="menuItem MathJax_MathItalic" id="phiButton" style="font-size: 45px;">&#981;</span>
+                    <span class="menuItem MathJax_MathItalic" id="chiButton" style="font-size: 45px;">&#967;</span>
+                    <span class="menuItem MathJax_MathItalic" id="psiButton" style="font-size: 45px;">&#968;</span>
+                    <span class="menuItem MathJax_MathItalic" id="omegaButton" style="font-size: 45px;">&#969;</span>
+                  </div>
+                  <div id="symbolsMisc" class="tab inner">
+                    <span class="menuItem MathJax_Main" id="partialButton" style="font-size: 45px;">&#8706;</span>
+                    <span class="menuItem MathJax_Main" id="infinityButton" style="font-size: 45px;">&#8734;</span>
+                  </div>
+                </div>
+            </div>
+
+            <div id="functions" class="tab outer">
+                <ul class="inner-tab-links tab-links">
+                    <li class="innerTab active"><a href="#functionsTrig">Trig</a></li>
+                    <li class="innerTab"><a href="#functionsMisc">Misc</a></li>
+                </ul>
+                <div class="tab-content tab-content-nested">
+                  <div id="functionsTrig" class="tab inner active">
+                    <span class="menuItem MathJax_Main" id="sinButton" style="font-size: 45px;">sin</span>
+                    <span class="menuItem MathJax_Main" id="cosButton" style="font-size: 45px;">cos</span>
+                    <span class="menuItem MathJax_Main" id="tanButton" style="font-size: 45px;">tan</span>
+                    <span class="menuItem MathJax_Main" id="cotButton" style="font-size: 45px;">cot</span>
+                    <span class="menuItem MathJax_Main" id="secButton" style="font-size: 45px;">sec</span>
+                    <span class="menuItem MathJax_Main" id="cscButton" style="font-size: 45px;">csc</span>
+                    <span class="menuItem MathJax_Main" id="sinhButton" style="font-size: 45px;">sinh</span>
+                    <span class="menuItem MathJax_Main" id="coshButton" style="font-size: 45px;">cosh</span>
+                    <span class="menuItem MathJax_Main" id="tanhButton" style="font-size: 45px;">tanh</span>
+                    <span class="menuItem MathJax_Main" id="cothButton" style="font-size: 45px;">coth</span>
+                    <span class="menuItem MathJax_Main" id="sechButton" style="font-size: 45px;">sech</span>
+                    <span class="menuItem MathJax_Main" id="cschButton" style="font-size: 45px;">csch</span>
+                  </div>
+                  <div id="functionsMisc" class="tab inner">
+                    <span class="menuItem MathJax_Main" id="limButton" style="font-size: 45px;">lim</span>
+                    <span class="menuItem MathJax_Main" id="maxButton" style="font-size: 45px;">max</span>
+                    <span class="menuItem MathJax_Main" id="minButton" style="font-size: 45px;">min</span>
+                    <span class="menuItem MathJax_Main" id="supButton" style="font-size: 45px;">sup</span>
+                    <span class="menuItem MathJax_Main" id="infButton" style="font-size: 45px;">inf</span><br/>
+                    <img class="menuItem" id="maxLowerButton" src="src/MenuImages/png/maxLower.png">
+                    <img class="menuItem" id="minLowerButton" src="src/MenuImages/png/minLower.png">
+                    <img class="menuItem" id="limLowerButton" src="src/MenuImages/png/limLower.png">
+                  </div>
+                </div>
+            </div>
+     
+            <div id="largeOperators" class="tab outer">
+                <ul class="inner-tab-links tab-links">
+                    <li class="innerTab active"><a href="#largeOperatorsSum"><img class="innerTabImg" src="src/MenuImages/png/sumSymbol.png"></a></li>
+                    <li class="innerTab"><a href="#largeOperatorsBigCap"><img class="innerTabImg" src="src/MenuImages/png/bigCapSymbol.png"></a></li>
+                    <li class="innerTab"><a href="#largeOperatorsBigCup"><img class="innerTabImg" src="src/MenuImages/png/bigCupSymbol.png"></a></li>
+                    <li class="innerTab"><a href="#largeOperatorsBigSqCap"><img class="innerTabImg" src="src/MenuImages/png/bigSqCapSymbol.png"></a></li>
+                    <li class="innerTab"><a href="#largeOperatorsBigSqCup"><img class="innerTabImg" src="src/MenuImages/png/bigSqCupSymbol.png"></a></li>
+                    <li class="innerTab"><a href="#largeOperatorsProd"><img class="innerTabImg" src="src/MenuImages/png/prodSymbol.png"></a></li>
+                    <li class="innerTab"><a href="#largeOperatorsCoProd"><img class="innerTabImg" src="src/MenuImages/png/coProdSymbol.png"></a></li>
+                    <li class="innerTab"><a href="#largeOperatorsBigVee"><img class="innerTabImg" src="src/MenuImages/png/bigVeeSymbol.png"></a></li>
+                    <li class="innerTab"><a href="#largeOperatorsBigWedge"><img class="innerTabImg" src="src/MenuImages/png/bigWedgeSymbol.png"></a></li>
+                </ul>
+                <div class="tab-content tab-content-nested">
+                  <div id="largeOperatorsSum" class="tab inner active">
+                    <img class="menuItem imgwh" id="sumBigOperatorButton" src="src/MenuImages/png/sum.png">
+                    <img class="menuItem imgwh" id="sumBigOperatorNoUpperButton" src="src/MenuImages/png/sumNoUpper.png">
+                    <img class="menuItem imgwh" id="sumBigOperatorNoUpperNoLowerButton" src="src/MenuImages/png/sumNoUpperNoLower.png">
+                    <img class="menuItem imgwh" id="inlineSumBigOperatorButton" src="src/MenuImages/png/sumInline.png">
+                    <img class="menuItem imgwh" id="inlineSumBigOperatorNoUpperButton" src="src/MenuImages/png/sumNoUpperInline.png">
+                  </div>
+                  <div id="largeOperatorsBigCap" class="tab inner">
+                    <img class="menuItem imgwh" id="bigCapBigOperatorButton" src="src/MenuImages/png/bigCap.png">
+                    <img class="menuItem imgwh" id="bigCapBigOperatorNoUpperButton" src="src/MenuImages/png/bigCapNoUpper.png">
+                    <img class="menuItem imgwh" id="bigCapBigOperatorNoUpperNoLowerButton" src="src/MenuImages/png/bigCapNoUpperNoLower.png">
+                    <img class="menuItem imgwh" id="inlineBigCapBigOperatorButton" src="src/MenuImages/png/bigCapInline.png">
+                    <img class="menuItem imgwh" id="inlineBigCapBigOperatorNoUpperButton" src="src/MenuImages/png/bigCapNoUpperInline.png">
+                  </div>
+                  <div id="largeOperatorsBigCup" class="tab inner">
+                    <img class="menuItem imgwh" id="bigCupBigOperatorButton" src="src/MenuImages/png/bigCup.png">
+                    <img class="menuItem imgwh" id="bigCupBigOperatorNoUpperButton" src="src/MenuImages/png/bigCupNoUpper.png">
+                    <img class="menuItem imgwh" id="bigCupBigOperatorNoUpperNoLowerButton" src="src/MenuImages/png/bigCupNoUpperNoLower.png">
+                    <img class="menuItem imgwh" id="inlineBigCupBigOperatorButton" src="src/MenuImages/png/bigCupInline.png">
+                    <img class="menuItem imgwh" id="inlineBigCupBigOperatorNoUpperButton" src="src/MenuImages/png/bigCupNoUpperInline.png">
+                  </div>
+                  <div id="largeOperatorsBigSqCap" class="tab inner">
+                    <img class="menuItem imgwh" id="bigSqCapBigOperatorButton" src="src/MenuImages/png/bigSqCap.png">
+                    <img class="menuItem imgwh" id="bigSqCapBigOperatorNoUpperButton" src="src/MenuImages/png/bigSqCapNoUpper.png">
+                    <img class="menuItem imgwh" id="bigSqCapBigOperatorNoUpperNoLowerButton" src="src/MenuImages/png/bigSqCapNoUpperNoLower.png">
+                    <img class="menuItem imgwh" id="inlineBigSqCapBigOperatorButton" src="src/MenuImages/png/bigSqCapInline.png">
+                    <img class="menuItem imgwh" id="inlineBigSqCapBigOperatorNoUpperButton" src="src/MenuImages/png/bigSqCapNoUpperInline.png">
+                  </div>
+                  <div id="largeOperatorsBigSqCup" class="tab inner">
+                    <img class="menuItem imgwh" id="bigSqCupBigOperatorButton" src="src/MenuImages/png/bigSqCup.png">
+                    <img class="menuItem imgwh" id="bigSqCupBigOperatorNoUpperButton" src="src/MenuImages/png/bigSqCupNoUpper.png">
+                    <img class="menuItem imgwh" id="bigSqCupBigOperatorNoUpperNoLowerButton" src="src/MenuImages/png/bigSqCupNoUpperNoLower.png">
+                    <img class="menuItem imgwh" id="inlineBigSqCupBigOperatorButton" src="src/MenuImages/png/bigSqCupInline.png">
+                    <img class="menuItem imgwh" id="inlineBigSqCupBigOperatorNoUpperButton" src="src/MenuImages/png/bigSqCupNoUpperInline.png">
+                  </div>
+                  <div id="largeOperatorsProd" class="tab inner">
+                    <img class="menuItem imgwh" id="prodBigOperatorButton" src="src/MenuImages/png/prod.png">
+                    <img class="menuItem imgwh" id="prodBigOperatorNoUpperButton" src="src/MenuImages/png/prodNoUpper.png">
+                    <img class="menuItem imgwh" id="prodBigOperatorNoUpperNoLowerButton" src="src/MenuImages/png/prodNoUpperNoLower.png">
+                    <img class="menuItem imgwh" id="inlineProdBigOperatorButton" src="src/MenuImages/png/prodInline.png">
+                    <img class="menuItem imgwh" id="inlineProdBigOperatorNoUpperButton" src="src/MenuImages/png/prodNoUpperInline.png">
+                  </div>
+                  <div id="largeOperatorsCoProd" class="tab inner">
+                    <img class="menuItem imgwh" id="coProdBigOperatorButton" src="src/MenuImages/png/coProd.png">
+                    <img class="menuItem imgwh" id="coProdBigOperatorNoUpperButton" src="src/MenuImages/png/coProdNoUpper.png">
+                    <img class="menuItem imgwh" id="coProdBigOperatorNoUpperNoLowerButton" src="src/MenuImages/png/coProdNoUpperNoLower.png">
+                    <img class="menuItem imgwh" id="inlineCoProdBigOperatorButton" src="src/MenuImages/png/coProdInline.png">
+                    <img class="menuItem imgwh" id="inlineCoProdBigOperatorNoUpperButton" src="src/MenuImages/png/coProdNoUpperInline.png">
+                  </div>
+                  <div id="largeOperatorsBigVee" class="tab inner">
+                    <img class="menuItem imgwh" id="bigVeeBigOperatorButton" src="src/MenuImages/png/bigVee.png">
+                    <img class="menuItem imgwh" id="bigVeeBigOperatorNoUpperButton" src="src/MenuImages/png/bigVeeNoUpper.png">
+                    <img class="menuItem imgwh" id="bigVeeBigOperatorNoUpperNoLowerButton" src="src/MenuImages/png/bigVeeNoUpperNoLower.png">
+                    <img class="menuItem imgwh" id="inlineBigVeeBigOperatorButton" src="src/MenuImages/png/bigVeeInline.png">
+                    <img class="menuItem imgwh" id="inlineBigVeeBigOperatorNoUpperButton" src="src/MenuImages/png/bigVeeNoUpperInline.png">
+                  </div>
+                  <div id="largeOperatorsBigWedge" class="tab inner">
+                    <img class="menuItem imgwh" id="bigWedgeBigOperatorButton" src="src/MenuImages/png/bigWedge.png">
+                    <img class="menuItem imgwh" id="bigWedgeBigOperatorNoUpperButton" src="src/MenuImages/png/bigWedgeNoUpper.png">
+                    <img class="menuItem imgwh" id="bigWedgeBigOperatorNoUpperNoLowerButton" src="src/MenuImages/png/bigWedgeNoUpperNoLower.png">
+                    <img class="menuItem imgwh" id="inlineBigWedgeBigOperatorButton" src="src/MenuImages/png/bigWedgeInline.png">
+                    <img class="menuItem imgwh" id="inlineBigWedgeBigOperatorNoUpperButton" src="src/MenuImages/png/bigWedgeNoUpperInline.png">
+                  </div>
+                </div>
+            </div>
+
+            <div id="integrals" class="tab outer">
+                <ul class="inner-tab-links tab-links">
+                    <li class="innerTab active"><a href="#integralsIntegral"><img class="innerTabImg" src="src/MenuImages/png/integralSymbol.png"></a></li>
+                    <li class="innerTab"><a href="#integralsDoubleIntegral"><img class="innerTabImg" src="src/MenuImages/png/doubleIntegralSymbol.png"></a></li>
+                    <li class="innerTab"><a href="#integralsTripleIntegral"><img class="innerTabImg" src="src/MenuImages/png/tripleIntegralSymbol.png"></a></li>
+                    <li class="innerTab"><a href="#integralsContourIntegral"><img class="innerTabImg" src="src/MenuImages/png/contourIntegralSymbol.png"></a></li>
+                    <li class="innerTab"><a href="#integralsContourDoubleIntegral"><img class="innerTabImg" src="src/MenuImages/png/doubleContourIntegralSymbol.png"></a></li>
+                    <li class="innerTab"><a href="#integralsContourTripleIntegral"><img class="innerTabImg" src="src/MenuImages/png/tripleContourIntegralSymbol.png"></a></li>
+                </ul>
+                <div class="tab-content tab-content-nested">
+                  <div id="integralsIntegral" class="tab inner active">
+                    <img class="menuItem imgwh" id="integralButton" src="src/MenuImages/png/integral.png">
+                    <img class="menuItem imgwh" id="integralNoUpperButton" src="src/MenuImages/png/integralNoUpper.png">
+                    <img class="menuItem imgwh" id="integralNoUpperNoLowerButton" src="src/MenuImages/png/integralNoUpperNoLower.png">
+                    <img class="menuItem imgwh" id="inlineIntegralButton" src="src/MenuImages/png/integralInline.png">
+                    <img class="menuItem imgwh" id="inlineIntegralNoUpperButton" src="src/MenuImages/png/integralNoUpperInline.png">
+                  </div>
+                  <div id="integralsDoubleIntegral" class="tab inner">
+                    <img class="menuItem imgwh" id="doubleIntegralButton" src="src/MenuImages/png/doubleIntegral.png">
+                    <img class="menuItem imgwh" id="doubleIntegralNoUpperButton" src="src/MenuImages/png/doubleIntegralNoUpper.png">
+                    <img class="menuItem imgwh" id="doubleIntegralNoUpperNoLowerButton" src="src/MenuImages/png/doubleIntegralNoUpperNoLower.png">
+                    <img class="menuItem imgwh" id="inlineDoubleIntegralButton" src="src/MenuImages/png/doubleIntegralInline.png">
+                    <img class="menuItem imgwh" id="inlineDoubleIntegralNoUpperButton" src="src/MenuImages/png/doubleIntegralNoUpperInline.png">
+                  </div>
+                  <div id="integralsTripleIntegral" class="tab inner">
+                    <img class="menuItem imgwh" id="tripleIntegralButton" src="src/MenuImages/png/tripleIntegral.png">
+                    <img class="menuItem imgwh" id="tripleIntegralNoUpperButton" src="src/MenuImages/png/tripleIntegralNoUpper.png">
+                    <img class="menuItem imgwh" id="tripleIntegralNoUpperNoLowerButton" src="src/MenuImages/png/tripleIntegralNoUpperNoLower.png">
+                    <img class="menuItem imgwh" id="inlineTripleIntegralButton" src="src/MenuImages/png/tripleIntegralInline.png">
+                    <img class="menuItem imgwh" id="inlineTripleIntegralNoUpperButton" src="src/MenuImages/png/tripleIntegralNoUpperInline.png">
+                  </div>
+                  <div id="integralsContourIntegral" class="tab inner">
+                    <img class="menuItem imgwh" id="contourIntegralButton" src="src/MenuImages/png/contourIntegral.png">
+                    <img class="menuItem imgwh" id="contourIntegralNoUpperButton" src="src/MenuImages/png/contourIntegralNoUpper.png">
+                    <img class="menuItem imgwh" id="contourIntegralNoUpperNoLowerButton" src="src/MenuImages/png/contourIntegralNoUpperNoLower.png">
+                    <img class="menuItem imgwh" id="inlineContourIntegralButton" src="src/MenuImages/png/contourIntegralInline.png">
+                    <img class="menuItem imgwh" id="inlineContourIntegralNoUpperButton" src="src/MenuImages/png/contourIntegralNoUpperInline.png">
+                  </div>
+                  <div id="integralsContourDoubleIntegral" class="tab inner">
+                    <img class="menuItem imgwh" id="contourDoubleIntegralButton" src="src/MenuImages/png/doubleContourIntegral.png">
+                    <img class="menuItem imgwh" id="contourDoubleIntegralNoUpperButton" src="src/MenuImages/png/doubleContourIntegralNoUpper.png">
+                    <img class="menuItem imgwh" id="contourDoubleIntegralNoUpperNoLowerButton" src="src/MenuImages/png/doubleContourIntegralNoUpperNoLower.png">
+                    <img class="menuItem imgwh" id="inlineContourDoubleIntegralButton" src="src/MenuImages/png/doubleContourIntegralInline.png">
+                    <img class="menuItem imgwh" id="inlineContourDoubleIntegralNoUpperButton" src="src/MenuImages/png/doubleContourIntegralNoUpperInline.png">
+                  </div>
+                  <div id="integralsContourTripleIntegral" class="tab inner">
+                    <img class="menuItem imgwh" id="contourTripleIntegralButton" src="src/MenuImages/png/tripleContourIntegral.png">
+                    <img class="menuItem imgwh" id="contourTripleIntegralNoUpperButton" src="src/MenuImages/png/tripleContourIntegralNoUpper.png">
+                    <img class="menuItem imgwh" id="contourTripleIntegralNoUpperNoLowerButton" src="src/MenuImages/png/tripleContourIntegralNoUpperNoLower.png">
+                    <img class="menuItem imgwh" id="inlineContourTripleIntegralButton" src="src/MenuImages/png/tripleContourIntegralInline.png">
+                    <img class="menuItem imgwh" id="inlineContourTripleIntegralNoUpperButton" src="src/MenuImages/png/tripleContourIntegralNoUpperInline.png">
+                  </div>
+                </div>
+            </div>
+            <div id="misc" class="tab outer">
+                <img class="menuItem imgzfx" id="dotAccentButton" src="src/MenuImages/png/dotAccent.png">
+                <img class="menuItem imgzfx" id="hatAccentButton" src="src/MenuImages/png/hatAccent.png">
+                <img class="menuItem imgzfx" id="vectorAccentButton" src="src/MenuImages/png/vectorAccent.png">
+                <img class="menuItem imgzfx" id="barAccentButton" src="src/MenuImages/png/barAccent.png">
+                <img class="menuItem imgzfx" id="wanAccentButton" src="src/MenuImages/png/barAccent01.png">
+                <img class="menuItem imgzfx" id="gaiAccentButton" src="src/MenuImages/png/barAccent02.png">
+                <br> 
+                <div style="display: inline-block">
+                	<table>
+                		<tr>
+                			<td>行数: <input type="text" id="rows" class="form-control"/></td>
+                			<td rowspan = "2"><div class="menuItem" id="matrixButton" style="font-size: 30px; padding: 5px 5px; display: inline-block">Matrix</div></td>
+                		</tr>
+                		<tr>
+                			<td>列数: <input type="text" id="cols" class="form-control"/></td>
+                		</tr>
+                	</table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    	var allCustom_data = {};
+    
+	    $(function(){
+	    	 
+	    	if (!!window.ActiveXObject || "ActiveXObject" in window){
+	        	$("#tab-content-top").css("margin-top","-6px"); 
+	        }else{
+	        	var explorer =navigator.userAgent;
+	        	if(explorer.indexOf("Chrome") >= 0){
+	        		$("#tab-content-top").css("margin-top","-2px"); 
+	        		$(".tab-content-nested").css("margin-top","-2px"); 
+        		}
+	        }
+	    	getCustom_gs();
+	    	
+		    $("#custom_gs").on("click",".menu-remove",function(e){
+		    	setTimeout(function(){
+		    		 if(confirm("确实删除自定义公式？")){
+		    			 $.ajax({            
+		    	                url: "/atrpnt-web-teacher/formulaToHtmlController/deleteCustomFormula",            
+		    	                data:{id: zdygs_select_id},
+		    	                type:"post",
+		    	                success: function(data) {
+		    	                	getCustom_gs();
+		    	                },
+		    	                error: function(data){alert("Save Func Error！");}
+	    	            });        
+		    		 }
+		    	},100);
+		    });
+	    });
+	    
+      	dialog.onok = function(){
+      		//去掉光标闪烁的div
+      		$(".cursor").remove();
+			//设置提示层
+      		maxOverLayFun_ctt("正在生成公式");
+			
+      		var jsonObj = $('.eqEdEquation').data('eqObject').buildJsonObj();
+  	      	//$('#ContentJSON').html(JSON.stringify(jsonObj));
+      		var editorhtml  = $(".equation-editor").html();
+      		var BASE_URL="${rc.getContextPath()}";
+      		$.ajax({            
+                url: "/atrpnt-web-teacher/formulaToHtmlController/createImg",            
+                data:{imgStr: encodeURI(editorhtml.replace(/\+/g,"&#43;")),jsonStr:encodeURI(JSON.stringify(jsonObj)),fType:1},
+                type:"post",
+                success: function(data) {
+                	maxOverLayColseFun();
+                	//console.log("结果=="+data);
+                	var jsons = eval("(" + data + ")");
+                	//成功
+                	if(jsons.status == 0){
+                		editor.execCommand('inserthtml', '<img class="kfformula" id="'+jsons.id+'" src="data:image/png;base64,'+ jsons.data +'" />');
+                    	dialog.close();
+                	}else{
+                		alert("生成公式错误....");
+                	}
+                },
+                error: function(data){alert("Save Func Error！");}
+            });        
+            return false;
+        }
+      	
+      	//修改格式，替换公式html
+      	function getOldHtmlGs(){
+      		console.log("参数=="+GetQueryString("id"));
+      		if(GetQueryString("id")!=null&&GetQueryString("id")!=""){
+      			$.ajax({            
+                    url: "/atrpnt-web-teacher/formulaToHtmlController/queryFormula",            
+                    data:{idStr: GetQueryString("id")},
+                    type:"post",
+                    success: function(data) {
+                    	//$(".equation-editor").html(decodeURI(data));
+                    	console.log(decodeURI(data));
+                    	var jsonObj = $.parseJSON(decodeURI(data));
+            	        var equation = eqEd.Equation.constructFromJsonObj(jsonObj);
+            	        $('#equation-editor-div').empty();
+            	        $('#equation-editor-div').append(equation.domObj.value);
+            	        equation.updateAll(); 
+                    },
+                    error: function(data){alert("Save Func Error！");}
+                });      
+      		}
+      	}
+      	//得到url种参数
+	   	function GetQueryString(name){
+	   	     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	   	     var r = window.location.search.substr(1).match(reg);
+	   	     if(r!=null)return  unescape(r[2]); return null;
+	   	}
+      	//生成胸罩层(带字)
+      	function maxOverLayFun_ctt(text_content) {
+      	    var overLayDiv = $("<div id='overLayDiv'/>").css({
+      	        "background-color": "rgba(255,255,255,0.5)",
+      	        "position": "absolute",
+      	        "width": "100%",
+      	        "height": "100%",
+      	        "top": "0px",
+      	        "left": "0px",
+      	        "z-index": "9998"
+      	    }).animate({ opacity: "0.3" }, 1000);
+
+      	    //得到浏览器高、宽(致使转圈在浏览器中间)
+      	    var llqheight = $("body").height();
+      	    var llqwidth = $("body").width();
+
+      	    var loadingDiv = $("<div id='overLayLoadingDiv'></div>").css({
+      	        "position": "absolute",
+      	        "_position": "absolute",
+      	        "top": ((llqheight-120)/2)+"px",
+      	        "left": ((llqwidth - 120) / 2) + "px",
+      	        "width": "120px",
+      	        "height": "120px",
+      	        "overflow": "hidden",
+      	        "background": "url(src/MenuImages/Loading.gif) no-repeat",
+      	        "z-index": "9999",
+      	        "padding-top":"70px",
+      	        "padding-left" :"3px"
+      	    });
+      	    loadingDiv.html(text_content);
+      	    
+      	    $("body").append(loadingDiv);
+      	    $("body").append(overLayDiv);
+      	    
+      	    //如果有iframe，则把iframe也给遮住
+      	    if(parent.document.getElementById("iframe")!=undefined){
+      	    	var overLayDiv_iframe = $("<div id='overLayDiv_iframe'/>").css({
+      	            "background-color": "rgba(255,255,255,0.5)",
+      	            "position": "absolute",
+      	            "width": "100%",
+      	            "height": "100%",
+      	            "top": "0px",
+      	            "left": "0px",
+      	            "z-index": "9998"
+      	        }).animate({ opacity: "0.3" }, 1000);
+      	    	$(parent.document.getElementById("menu")).append(overLayDiv_iframe);
+      	    }
+      	}
+      	
+      	/**
+      	* 关闭遮罩层
+      	*/
+      	function maxOverLayColseFun() {
+      	    $(document.getElementById("overLayDiv")).remove();
+      	    $(document.getElementById("overLayLoadingDiv")).remove();
+      	    
+      	    //如果有iframe，则把iframe也给遮住
+      	    if(parent.document.getElementById("iframe")!=undefined){
+      	    	$(parent.document.getElementById("overLayDiv_iframe")).remove();
+      	    }
+      	}
+      	var zdygs_select_id = "";
+      	//自定义公式使用
+      	function setCustom_gs_html(id){
+      		zdygs_select_id = id;
+      		
+      		for(var i=0;i<allCustom_data.length;i++){
+      			if(id == allCustom_data[i].id){
+      				var jsonObj = $.parseJSON(decodeURI(allCustom_data[i].text));
+        	        var equation = eqEd.Equation.constructFromJsonObj(jsonObj);
+        	        $('#equation-editor-div').empty();
+        	        $('#equation-editor-div').append(equation.domObj.value);
+        	        equation.updateAll(); 
+      			}
+        	}
+      	}
+      	
+        //得到全部自定义公式
+      	function getCustom_gs(){
+  			$.ajax({            
+                url: "/atrpnt-web-teacher/formulaToHtmlController/queryAllCustomFormula",            
+                data:"{gsType:2}",
+                type:"post",
+                success: function(data) {
+                	var jsons = eval("(" + data + ")");
+                	allCustom_data = jsons;
+                	var html = '';
+                	for(var i=0;i<jsons.length;i++){
+                		html += '<a href="javascript:void(0)" style="margin:5px 10px;position: relative;" onclick="setCustom_gs_html('+jsons[i].id+')"><i class="menu-remove"></i><img class="custom_gs_a" height="50" style="width:122px;" id="'+jsons[i].id+'" src="data:image/png;base64,'+ jsons[i].content +'" /></a>';
+                	}
+        	        $("#custom_gs").html(html);
+                },
+                error: function(data){alert("Save Func Error！");}
+            });      
+      	}
+        
+      	//保存自定义公式
+      	function saveCustom_gs(){
+      		//先得到生成的图片
+      		
+      		//去掉光标闪烁的div
+      		$(".cursor").remove();
+			//设置提示层
+      		maxOverLayFun_ctt("正在保存公式");
+			
+      		var jsonObj = $('.eqEdEquation').data('eqObject').buildJsonObj();
+      		var editorhtml  = $(".equation-editor").html();
+      		$.ajax({            
+                url: "/atrpnt-web-teacher/formulaToHtmlController/createImg",            
+                data:{imgStr: encodeURI(editorhtml.replace(/\+/g,"&#43;")),jsonStr:encodeURI(JSON.stringify(jsonObj)),fType:2},
+                type:"post",
+                success: function(data) {
+                	maxOverLayColseFun();
+                	var jsons = eval("(" + data + ")");
+                	//成功
+                	if(jsons.status == 0){
+                		getCustom_gs();   
+                	}else{
+                		alert("生成保存自定义公式错误....");
+                	}
+                },
+                error: function(data){
+                	maxOverLayColseFun();
+                	alert("生成保存自定义公式错误....");
+               	}
+            });        
+      	}
+    </script>
+</body>
+</html>

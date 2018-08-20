@@ -1,0 +1,16 @@
+<div class="forum-list-wrap clearfix">
+	<div class="forum-left-wrap" >
+		<ul>
+			<li ng-class="{active:forumType==1}" ng-click="changeType(1)"><a  ><i class="icon icon-impression"></i>西安印象</a></li>
+			<li ng-class="{active:forumType==2}" ng-click="changeType(2)"><a ><i class="icon icon-news"></i>热点新闻</a></li>
+			<li ng-class="{active:forumType==3}" ng-click="changeType(3)"><a ><i class="icon icon-academic"></i>学术交流</a></li>
+			<li ng-class="{active:forumType==4}" ng-click="changeType(4)"><a ><i class="icon icon-ticket"></i>娱乐播报</a></li>
+			<li ng-class="{active:forumType==5}" ng-click="changeType(5)"><a ><i class="icon icon-sports-express"></i>体坛快讯</a></li>
+			<li ng-class="{active:forumType==6}" ng-click="changeType(6)"><a ><i class="icon icon-iron-military"></i>铁血军事</a></li>
+			<li ng-class="{active:forumType==7}" ng-click="changeType(7)"><a ><i class="icon icon-health-related"></i>健康养生</a></li>
+		</ul>
+	</div>
+	<div class="forum-right-wrap" >
+		<div ng-include="getView()"></div>
+	</div>
+</div>

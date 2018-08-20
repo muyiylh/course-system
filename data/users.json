@@ -1,0 +1,12 @@
+{"data":
+ [
+                    { "id" : "1", "parent" : "#", "text" : "全部","state": { "opened": true} },
+                    { "id" : "2", "parent": "1", "text" : "JIM"},
+                    { "id" : "3", "parent" : "1", "text" : "Child 1"},
+                    { "id" : "4", "parent": "1", "text" : "Child 2" },
+                    { "id" : "5", "parent" : "1", "text": "JIM"},
+                    { "id" : "6", "parent": "1","text": "Child 1"},
+                    { "id" : "7", "parent" : "1", "text": "Child 2"}
+               
+                ]
+}

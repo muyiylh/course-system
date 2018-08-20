@@ -1,0 +1,132 @@
+<div class="forum-list-wrap clearfix">
+	<div class="forum-left-wrap" >
+		<ul>
+			<li ng-class="{active:forumType==1}" ng-click="changeType(1)">
+			<a><i class="icon icon-cloud"></i>我的网盘</a>
+				<ul >
+					<li ng-class="{active:documentType=='all'}" ng-click="loadData(0,'all')"><a>全部文件</a></li>
+					<li ng-class="{active:documentType=='document'}" ng-click="loadData(0,'document')"><a>文档</a></li>
+					<li ng-class="{active:documentType=='media'}" ng-click="loadData(0,'media')"><a>多媒体文件</a></li>
+					<li ng-class="{active:documentType=='img'}" ng-click="loadData(0,'img')"><a>图片</a></li>
+					<li ng-class="{active:documentType=='zip'}" ng-click="loadData(0,'zip')"><a>压缩文件</a></li>
+					<li ng-class="{active:documentType=='other'}" ng-click="loadData(0,'other')"><a>其他类型文件</a></li>
+				</ul>
+			</li>
+			<li ng-class="{active:documentType=='myshare'}" ng-click="loadData(0,'myshare')"><a ><i class="icon icon-my-share"></i>我的分享</a></li>
+			<li ng-class="{active:documentType=='othershare'}" ng-click="loadData(0,'othershare')"><a ><i class="icon icon-other-share"></i>他人的分享</a></li>
+			<li ng-class="{active:documentType=='recycle'}" ng-click="loadData(0,'recycle')"><a ><i class="icon icon-recycle"></i>回收站</a></li>
+		
+		</ul>
+	</div>
+	<div class="forum-right-wrap" >
+		<ul class="clound-btns-box" ng-show="storageFlag">
+			<li><a ngf-select="upload($file)"><i class="icon-btn-upload"></i>上传</a></li>
+			<li ng-if="documentType=='all'" ><a ng-click="newFile()"><i class="icon-new-add"></i>新建文件夹</a></li>
+			<li><a ng-click="refresh()"><i class="icon-btn-refresh"></i>刷新</a></li>
+
+			<li class="operate-btn" ng-if="operateBtnFlag">
+				<a ng-click="share()"><i class="icon-btn-share"></i>分享</a>
+				<a ng-click="delete()"><i class="icon-btn-delete"></i>批量删除</a>
+				<a ng-click="copy()"><i class="icon-btn-copy"></i>复制到</a>
+				<a ng-click="move()"><i class="icon-btn-move"></i>移动到</a>
+				<a ><i class="icon-down"></i>下载</a>
+			</li>			
+		</ul>
+		<ul class="clound-btns-box" ng-show="recycleFlag">
+			<li ng-show="recycleOperate"><a><i class="icon-restore"></i>还原</a></li>
+			<li ng-show="recycleOperate"><a><i class="icon-btn-delete"></i>删除</a></li>
+			<li><a><i class="icon-clear"></i>清空所有</a></li>
+
+						
+		</ul>
+		<ul class="clound-btns-box" ng-show="myshareOperate">
+			<li><a><i class="icon-cancel-share"></i>取消分享</a></li>
+			
+
+						
+		</ul>
+		<div class="location" ng-bind-html="html | to_trusted" compile-html></div>
+		<div class="table-wrap">
+			<table class="table table-striped cloud-table-box">
+				<thead>
+					<tr>
+						<td style="position:relative" width="30px" ng-show="!othershareFlag">
+						<!-- -->
+						<span class="check-box check-all" ng-click="selectAll();"><span class="icon checksmall"></span>
+						<input type="checkbox" ng-model="all" class="input-check" name=""> 
+						</span>
+						</td>
+						 <td >文件名</td>
+						<td ng-show="showInfoFlag">文件大小</td>
+						<td ng-show="showInfoFlag">上传时间</td>
+						<td ng-show="othershareFlag && showInfoFlag">上传者</td>
+						<td ng-show="storageFlag && showInfoFlag">操作</td>
+						<td ng-show="recycleFlag && showInfoFlag">操作</td>
+						<td ng-show="myshareFlag && showInfoFlag">操作</td>
+						<td ng-show="othershareFlag && showInfoFlag">操作</td> 
+						<!-- <td width="47%">文件名</td>
+						<td width="15%">文件大小</td>
+						<td width="15%">上传时间</td>
+						<td ng-show="othershareFlag">上传者</td>
+						<td width="20%" ng-show="storageFlag">操作</td>
+						<td width="20%" ng-show="recycleFlag">操作</td>
+						<td width="20%" ng-show="myshareFlag">操作</td> -->
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="cloud in clouds" ng-init="id=cloud.id" ng-class="{active:cloud.id==fileId}" >
+						<td style="position:relative" ng-show="!othershareFlag">
+						<!-- <input type="checkbox" class="checkbox" name="" value="{{cloud.id}}"> -->
+						<span class="check-box item-check{{cloud.id}}" ng-click="select(cloud.id);"><span class="icon checksmall"></span>
+						<input type="checkbox" ng-model="$parent.checks[cloud.id]" class="input-check" name=""> 
+						</span>
+						</td>
+						<td>
+							<div class="cloud-name">
+								<span class="catalog document-icon" ng-if="cloud.type=='catalog'"></span>
+								<span class="zip document-icon" ng-if="cloud.type=='zip'"></span>
+								<span class="fileicon-small-video document-icon" ng-if="cloud.type=='video'"></span>
+								<span class="fileicon-small-pdf document-icon" ng-if="cloud.type=='pdf'"></span>
+								<span class="fileicon-small-doc document-icon" ng-if="cloud.type=='word'"></span>
+								<span class="fileicon-small-pic document-icon" ng-if="cloud.type=='img'"></span>
+								<span class="fileicon-small-ppt document-icon" ng-if="cloud.type=='ppt'"></span>
+								<span class="fileicon-small-xls document-icon" ng-if="cloud.type=='xls'"></span>
+								<span class="fileicon-small-code document-icon" ng-if="cloud.type=='code'"></span>
+								<span class="fileicon-small-txt document-icon" ng-if="cloud.type=='txt'"></span>
+								<span class="fileicon-small-mp3 document-icon" ng-if="cloud.type=='mp3'"></span>
+								<span class="default-small document-icon" ng-if="cloud.type=='other'"></span>
+								&nbsp;&nbsp;
+								<span class="text" style="cursor:pointer" ng-if="cloud.type=='catalog'" ng-click="loadChildNode(cloud.id,cloud.title)">{{cloud.title}}</span>
+								<span class="text" ng-if="cloud.type!='catalog'" >{{cloud.title}}</span>
+							</div>
+						</td>
+						<td ng-show="showInfoFlag">{{cloud.size}}</td>
+						<td ng-show="showInfoFlag">{{cloud.uploadTime}}</td>
+						<td ng-show="othershareFlag && showInfoFlag">{{cloud.user}}</td>
+						<td ng-show="storageFlag && showInfoFlag">
+							<i title="分享" ng-click="share(cloud.id)" class="icon-btn-share"></i>
+							<i title="删除" ng-click="delete(cloud.id)" class="icon-btn-delete"></i>
+							<i title="复制" ng-click="copy(cloud.id)" class="icon-btn-copy"></i>
+							<i title="移动" ng-click="move(cloud.id)" class="icon-btn-move"></i>
+							<i class="icon-down" title="下载"></i>
+							</td>
+						<td ng-show="recycleFlag && showInfoFlag">
+							<i title="还原" class="icon-restore"></i>
+							<i title="删除" class="icon-btn-delete"></i>
+							</td>
+						<td ng-show="myshareFlag && showInfoFlag">
+							<i title="取消分享" class="icon-cancel-share"></i>
+					
+							</td>
+						<td ng-show="othershareFlag && showInfoFlag">
+							<i class="icon-down" title="下载"></i>
+					
+							</td>
+							
+					</tr>
+				</tbody>
+			</table>
+			<s-pagination conf="cloudConf"></s-pagination>
+		</div>
+	</div>
+</div>

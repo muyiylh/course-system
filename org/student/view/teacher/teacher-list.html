@@ -1,0 +1,27 @@
+<div>
+	<!-- <div class="title">全部课程</div>
+	<div class="grey-line"></div> -->
+	<div class="lesson-list">
+		
+		<ul class="  teacher-list clearfix">
+
+			<li ng-repeat="teacher in teachers" style="height:{{height}}px;width:{{width}}px">
+				<div class=" teacherimg-box">
+				
+					<a  ui-sref="teacher.detail({id:teacher.id})" >
+						<img ng-src="{{teacher.img}}" class="teacherimg" style="height:{{height-40}}px" title="teacher.name" alt="teacher.name">
+						
+						<!-- <div class="lessonplay" style="">
+							<i class="playericon" jktag="&amp;posGP=103001&amp;posArea=0002&amp;posOper=2004&amp;aCId=3224&amp;posColumn=3224.1"></i>
+						</div> -->
+					</a>
+					<div class="teacher-infor" style="height:40px;">
+						<h2 class="teacher-info-h2"><a>{{teacher.teacher}}&nbsp;&nbsp;{{teacher.skill}}</a></h2>
+					</div>
+				</div>
+			</li>
+		</div>
+	</div>
+	 <s-pagination conf="paginationConf"></s-pagination>
+
+</div>

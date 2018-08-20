@@ -1,0 +1,31 @@
+<div>
+	 <swiper conf="examineNum"></swiper>
+	 <ul class="kaohe-box clearfix">
+	 	<li ng-class="{active:testType==1}" class="active" ng-click="examineConf.onChange(1)"><a >课后作业</a></li>
+	 	<li ng-class="{active:testType==2}" ng-click="examineConf.onChange(2)"><a >随堂测试</a></li>
+	 	<li ng-class="{active:testType==3}" ng-click="examineConf.onChange(3)"><a >课程实验</a></li>
+	 	<li ng-class="{active:testType==4}" ng-click="examineConf.onChange(4)"><a >研究报告</a></li>
+	 	<li ng-class="{active:testType==5}" ng-click="examineConf.onChange(5)"><a >课程考试</a></li>
+	 </ul>
+	 <table class="table">
+	 	<thead>
+	 		<tr>
+	 			<td>作业名称</td>
+	 			<td>创建人</td>
+	 			<td>提交时间</td>
+	 			<td>得分</td>
+	 			<td>操作</td>
+	 		</tr>
+	 	</thead>
+	 	<tbody>
+	 		<tr ng-repeat="examine in examines">
+	 			<td>{{examine.title}}</td>
+	 			<td>{{examine.creator}}</td>
+	 			<td>{{examine.createTime}}</td>
+	 			<td>{{examine.score}}</td>
+	 			<td><a  href="exam.html?id={{examine.id}}&courseId={{courseId}}&chapter={{examineNum.id}}&type={{examType}}" target="_blank">{{examine.status}}</a></td>
+	 		</tr>
+	 	</tbody>
+	 </table>
+	  <s-pagination conf="examineConf"></s-pagination>
+</div>

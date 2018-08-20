@@ -1,0 +1,16 @@
+{
+	"chineseName":"杨鹏",
+	"sex":"male",
+	"birthdate":"1963-09-01",
+	"education":"研究生",
+	"jobTitle":"副教授",
+	"job":"主任",
+	"organization":"教学科研办公室",
+	"avatar":"images/t2.jpg",
+	"personalDetails":[
+		{"content":"1984.09-1987.07,四川省乐山师范专科学院四川省乐山师范专科学院院四川省乐山师范专科学院"},
+		{"content":"1987.07-1991.03,四川省乐山财贸教师"},
+		{"content":"1991.03-1992.10,四川省研究院副主任"},
+		{"content":"1987.07-1991.03,四川省乐山财贸教师"}
+	]
+}

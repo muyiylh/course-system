@@ -1,0 +1,24 @@
+<div>
+	 <swiper conf="chapterNum"></swiper>
+	 <div class="chapter-wrap">
+	 <div class="chapter-title">{{chapterTitle}}</div>
+	 <div class="chapter-box" >
+	 	<div class="clearfix" ng-repeat="chapter in chapters">
+	 		<div class="level-1"><span class="fa fa-caret-right open"></span>&nbsp;&nbsp;{{chapter.title}}</div>
+	 		<div class="clearfix level-2" ng-if="chapter.children" ng-repeat="child in chapter.children">
+		 		<div class="left">
+		 			<span ng-if="child.type=='voice'" class="fa fa-file-video-o"></span>
+					<span ng-if="child.type=='doc'" class="fa fa-file-word-o"></span>
+					<span ng-if="child.type=='pdf'" class=" fa fa-file-pdf-o"></span>
+					<span ng-if="child.type=='img'" class=" fa fa-file-image-o"></span>
+					<span ng-if="child.type=='zip'" class="fa fa-file-zip-o"></span>
+		 			&nbsp;&nbsp;{{child.title}}</div>
+		 		<div class="right">
+		 			<a ng-if="child.type=='voice'" title="播放"><span class="fa fa-play-circle"></span></a>&nbsp;&nbsp;
+		 			<a title="下载"><span class="fa fa-arrow-circle-down"></span></a>
+		 		</div>
+		 	</div>
+	 	</div>	 	
+	 </div>
+	 </div>
+</div>

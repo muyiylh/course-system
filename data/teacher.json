@@ -1,0 +1,121 @@
+{"data":
+    [
+    {
+        "id": 1,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t1.jpg"
+
+    },
+    {
+        "id": 2,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t2.jpg"
+    },
+    {
+        "id": 3,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t3.jpg"
+    },
+    {
+        "id": 4,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t1.jpg"
+    },
+    {
+        "id": 5,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t2.jpg"
+    },
+    {
+        "id": 6,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t3.jpg"
+    },
+    {
+        "id": 7,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t1.jpg"
+    },
+    {
+        "id": 8,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t2.jpg"
+    },
+    {
+        "id": 9,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t3.jpg"
+    },
+    {
+        "id": 10,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t1.jpg"
+    },
+    {
+        "id": 11,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t2.jpg"
+    },
+    {
+        "id": 12,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t3.jpg"
+    },
+    {
+        "id": 13,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t1.jpg"
+    },
+    {
+        "id": 14,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t2.jpg"
+    },
+    {
+        "id": 15,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t3.jpg"
+    },
+    {
+        "id": 16,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t1.jpg"
+    },
+    {
+        "id": 17,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t2.jpg"
+    },
+    {
+        "id": 18,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t3.jpg"
+    },
+    {
+        "id": 19,
+        "teacher": "秦静",
+        "skill": "教授",
+        "img": "images/t2.jpg"
+    }
+],
+"pageList":"20",
+"total":"200"
+}

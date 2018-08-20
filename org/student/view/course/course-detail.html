@@ -1,0 +1,104 @@
+<div>
+	<img src="images/kec_banner.jpg" width="100%">
+</div>
+<div class="course-detail-box clearfix">
+	<div class="course-detail-left">
+		<div class="course-intro-title clearfix">
+			<div class="left">课程简介</div>
+			<div class="right"><em>15</em>人评价</div>
+			
+		</div>
+		<div class="course-intro-content clearfix">
+				<div class="left ">
+					<img src="images/1.jpg" width="100%" />
+				</div>
+				<div class="right">
+
+					<h2>计算机基础知识</h2>
+					<div class="teacher-info clearfix" style="">
+							<div class="user-pic"><img ng-src="images/timg.jpg" width="100%" height="100%" src="images/timg.jpg"></div>
+							<div class="teacher-info-xl">
+								<div class="ng-binding">秦静</div>
+								<div class="ng-binding">数学</div>
+							</div>
+							<div class="create-time">创建时间：2017-01-01</div>
+					</div>
+					<p>本课程主要讨论有限维线性空间的线性理论与方法，具有较强的逻辑性、抽象性与广泛的实用性，尤其在计算机日益普及的今天，解大型线性方程组、求矩阵的特征值等已经成为技术人员经常遇到的课题。
+
+<!-- 本课程主要讨论有限维线性空间的线性理论与方法，具有较强的逻辑性、抽象性与广泛的实用性，尤其在计算机日益普及的今天，解大型线性方程组、求矩阵的特征值等已经成为技术人员经常遇到的课题。
+本课程主要讨论有限维线性空间的线性理论与方法，具有较强的逻辑性、抽象性与广泛的实用性，尤其在计算机日益普及的今天，解大型线性方程组、求矩阵的特征值等已经成为技术人员经常遇到的课题。
+本课程主要讨论有限维线性空间的线性理论与方法，具有较强的逻辑性、抽象性与广泛的实用性，尤其在计算机日益普及的今天，解大型线性方程组、求矩阵的特征值等已经成为技术人员经常遇到的课题。课程 -->
+					</p>
+					<ul class="clearfix course-info">
+						<li class="">2015上学期</li>
+						<li class="">5个学分</li>
+						<li class="">100课时</li>
+						<li class="">100个课件</li>
+					</ul>
+				</div>
+			</div>
+	</div>
+	<div class="course-detail-right">
+		<div class="notice-box">
+				<div class="row course-intro-title">
+					<div class="notice col-sm-12">课程公告</div>
+				</div>
+				<div class="notice-content">
+				<div class="clearfix">
+					<div class="left">发布期末考试</div>
+					<div class="right">2017-04-01</div>
+				</div>
+				<div class="clearfix">
+					<div class="left">发布期末考试</div>
+					<div class="right">2017-04-01</div>
+				</div>
+				<div class="clearfix">
+					<div class="left">发布期末考试</div>
+					<div class="right">2017-04-01</div>
+				</div>
+				<div class="clearfix">
+					<div class="left">发布期末考试</div>
+					<div class="right">2017-04-01</div>
+				</div>
+				</div>
+			</div>
+			<div class="instructor-box">
+				<div class="row course-intro-title">
+					<div class="notice col-sm-12">课程教员</div>
+				</div>
+				<div class="instructor-content">
+				<ul class="clearfix">
+					<li class="name">洋洋</li>
+					<li class="type"><em>主讲</em></li>
+					<li class="tel grey">18221174586</li>
+					<li class="grey job">教员</li>
+				</ul>
+				<ul class="clearfix">
+					<li class="name">洋洋</li>
+					<li class="type"><em>主讲</em></li>
+					<li class="tel grey">18221174586</li>
+					<li class="grey job">教员</li>
+				</ul>
+				<ul class="clearfix">
+					<li class="name">洋洋</li>
+					<li class="type"><em>主讲</em></li>
+					<li class="tel grey">18221174586</li>
+					<li class="grey job">教员</li>
+				</ul>
+				
+		
+				</div>
+			</div>
+	</div>
+
+</div>
+<div class="course-detail-intro-box">
+	<ul class="course-detail-intro-nav clearfix">
+		<li><a ng-click="tabs('chapter')" ng-class="{active:type=='course-chapter'}" ><span></span>章节</a></li>
+		<li><a ng-click="tabs('examine')" ng-class="{active:type=='course-examine'}"><span></span>考核</a></li>
+		<li><a ng-click="tabs('grade')" ng-class="{active:type=='course-grade'}"><span></span>成绩</a></li>
+		<li><a ng-click="tabs('evaluate')" ng-class="{active:type=='course-evaluate'}"><span></span>评价</a></li>
+		<li><a ng-click="tabs('discuss')" ng-class="{active:type=='course-discuss'}" id="discussTab"><span></span>讨论</a></li>
+	</ul>
+	<div class="course-detail-intro-content" ng-include="getView()"></div>
+</div>

@@ -1,0 +1,56 @@
+<div class="discuss-detail-box" style="margin-left: 10px;margin-right: 10px;">
+	   <div class="discuss-detail-wrap clearfix" >
+        <div>
+          <div class="avatar"><img ng-src="{{discussDetails.img}}" width="100%"/></div>
+          <div class="discuss-detail-content">
+              <div class="clearfix discuss-detail-title">
+                <div class="left">{{discussDetails.title}}</div>
+                <div class="right">
+                  <span class="fa fa fa-user"></span>&nbsp;楼主 &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="glyphicon glyphicon-time"></span>&nbsp;{{discussDetails.time}}
+                </div>
+              </div>
+              <p>{{discussDetails.content}}</p>
+          </div>
+        </div>
+        <div class="tag-top"></div>
+        <discuss-list conf="discussDetailConf"></discuss-list>
+        <!-- <div class="discuss-level1 clearfix" ng-repeat="detail in discussDetails.data">
+          <div class="discuss-level1-wrap clearfix">
+            <div class="avatar"><img ng-src="{{detail.img}}" width="100%"/></div>
+            <div class="discuss-level1-content">
+                <div class="clearfix replay-content">
+                  <div class="left">{{detail.name}}：{{detail.content}}<br><span>{{detail.time}}</span><a>回复</a></div>
+                  <div class="right">{{detail.floor}}楼 </div>
+                </div>
+              </div>
+          </div>
+          <div class="discuss-level2" id="discussLevel2{{secDetail.id}}" ng-if="detail.children" ng-repeat="secDetail in detail.children">
+              <div class="discuss-level2-wrap">
+                  <div class="avatar"><img ng-src="{{secDetail.img}}" width="100%"/></div>
+                  <div class="discuss-level2-content">
+                      <div class="clearfix replay-content">
+                        {{secDetail.name}}：{{secDetail.content}}<br><span>{{secDetail.time}} </span><a ng-click="reply(secDetail.id,2)">回复</a>
+                      </div>
+                   </div>
+              </div>
+              <div class="discuss-level3" ng-if="secDetail.children" ng-repeat="theDetail in secDetail.children">
+                  <div>
+                    <div class="avatar"><img ng-src="{{theDetail.img}}" width="100%"/></div>
+                    <div class="discuss-level3-content">
+                        <div class="clearfix replay-content">
+                          {{theDetail.name}}：{{theDetail.content}}<br><span>{{theDetail.time}}</span>
+                        </div>
+                     </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <s-pagination conf="discussDetailConf"></s-pagination> -->
+     </div>
+     <div class="ueditor" ready="ready" ng-model="content"></div>
+     <div class="">
+         <input type="button" class="btn btn-cancel" value="取消">
+        <input type="button" class="btn btn-ok" value="确定 ">
+       </div>
+</div>

@@ -1,0 +1,21 @@
+<div>
+<div class="title" style="font-size:120%;">消息中心</div>
+
+	<table class="table table-striped " style="border-left: 1px solid #d5d5d5;margin-top:10px;">
+		
+			<tr>
+				<td>主题</td>
+				<td>发布人</td>
+				<td>发布时间</td>
+				<td>操作</td>
+			</tr>
+			<tr ng-repeat="notice in notices">
+				<td><a>{{notice.theme}}</a></td>
+				<td>{{notice.publisher}}</td>
+				<td>{{notice.time}}</td>
+				<td><a>去答题</a></td>
+			</tr>
+	
+	</table>
+	<s-pagination conf="noticeConf"></s-pagination>
+</div>

@@ -1,0 +1,24 @@
+<div style="margin-left: 10px;margin-right: 10px;">
+	<div class="clearfix">
+		<div class="left"><a ng-click="tabs('addDiscuss')" class="btn btn-posted"><span class="fa fa-edit"></span>我要发帖</a></div>
+		<div class="right text-right" style="width:20%">
+			<div class="input-group " >
+			  <input type="text" class="form-control" placeholder="请输入关键字" aria-describedby="basic-addon2">
+			  <span class="input-group-addon" id="basic-addon2">搜索</span>
+			</div>
+		</div>
+	</div>
+	<div class="discuss-wrap" ng-repeat="discuss in discusses" ng-click="tabs(discuss.id)">
+		<div class="discuss-time">
+			<span class="glyphicon glyphicon-time"></span>&nbsp;{{discuss.time}} &nbsp;&nbsp;&nbsp;&nbsp;
+			<span class="fa fa fa-user"></span>&nbsp;{{discuss.name}}
+		</div>
+		<h4>{{discuss.title}}</h4>
+		<p>
+			{{discuss.content}}
+		</p>
+		<h5>回复&nbsp;{{discuss.reply}}/浏览&nbsp;{{discuss.scans}}</h5>
+	</div>
+
+	<s-pagination conf="discussConf"></s-pagination>
+</div>

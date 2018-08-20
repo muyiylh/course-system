@@ -1,0 +1,92 @@
+<header class="site-header">
+  <nav class="navbar navbar-theme">
+  <!-- container-fluid -->
+    <div class="container" style="position:relative;background:#3185c1;">
+      <div class="navbar-header" >
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+          <span class="sr-only-text">菜单</span>
+          <span class="icon-bar glyphicon glyphicon-align-justify"></span>
+          <!--<span class="icon-bar glyphicon glyphicon-align-justify"></span>-->
+          <!--<span class="icon-bar glyphicon glyphicon-align-justify"></span>-->
+        </button>
+        <div class="navbar-brand-wrap">
+          <a class="navbar-brand" href="#">
+            管院教研专网应用软件系统
+          </a>
+        </div>
+      </div> <!-- .navbar-header -->
+
+      <div class="collapse navbar-collapse" id="navbar-collapse" style="float:left;" aria-expanded="false">
+        <ul class="nav navbar-nav navbar-left" >
+          <!-- <li class="active"><a href="#home">首页</a></li> -->
+          <li ui-sref-active="active"><a  ui-sref="course.list" ng-class="{active:active=='course'}"ui-sref-opt="{reload:true}" >课程</a></li>
+
+          <li><a ui-sref="teacher.list"  ng-class="{active:active=='teacher'}" ui-sref-opt="{reload:true}">讲师</a></li>
+          <li><a ui-sref="forum.list" ng-class="{active:active=='forum'}" ui-sref-opt="{reload:true}">论坛</a></li>
+          <li><a ui-sref="library" ng-class="{active:active=='library'}" ui-sref-opt="{reload:true}">图书馆</a></li>
+          <li><a ui-sref="cloud" ng-class="{active:active=='cloud'}" ui-sref-opt="{reload:true}">专网云盘</a></li>
+          
+          <!-- <li><a href="/apps/ios/open"><i class="fa fa-user"></i>&nbsp;张三</a></li> -->
+          
+        </ul>
+       <!--   <ul class="nav navbar-nav navbar-left" ng-if="!loginFlag">
+          <li ><a class="active">课程</a></li>
+
+          <li><a ng-click="login()" >讲师</a></li>
+          <li><a ng-click="login()" >论坛</a></li>
+          <li><a ng-click="login()" >图书馆</a></li>
+          <li><a ng-click="login()" >专网云盘</a></li>
+          
+          
+        </ul> -->
+      </div> <!-- .navbar-collapse -->
+      <div class="basic-info-box">
+        <ul class="nav navbar-nav navbar-right warning-box" ng-if="user">
+          <li style="padding-right:5px;">
+            <a href=""><span class="fa fa-bell-o"></span></a></li>
+          <div class="waring-num">{{user.notice}}</div>
+          <li>
+              <a data-toggle="dropdown" class="dropdown-toggle" ng-click="toggleInfo()">
+               <span class="avatar" ><img ng-src="{{user.avatar}}" ></span>{{user.userName}}<b class="caret"></b>
+              </a>
+
+          </li>
+          <ul  role="menu" class="dropdown-setting dropdown-menu info-dropdown-menu" ng-show="infoFlag" style="display:block;">
+                <li class="row">
+                  <div class="col-xs-6"><a ui-sref="mycourse({type:'mycourse'})" class="header-link" url="" title="personinfo">
+                  我的课程</a></div>
+                  <div class="col-xs-6"><a ui-sref="mygroup({type:'group'})" class="header-link" url="" title="personinfo">
+                  我的群组</a></div>
+                </li>
+                <li class="row">
+                  <div class="col-xs-6"><a ui-sref="notice" class="header-link" url="" title="personinfo">
+                    消息中心</a></div>
+                  <div class="col-xs-6"><a ui-sref="info" class="header-link" url="" title="personinfo">
+                  个人设置</a></div>
+                </li>
+                <li class="underline"></li>
+                <li class="clearfix">
+                  <div class="col-xs-2 info-clock">
+                    <span class="fa fa-clock-o"></span>
+                  </div>
+                  <div class="col-xs-7">
+                    <div>PHP基础应用</div>
+                    <div>PHP面向对象</div>
+                  </div>
+                  <div class="col-xs-2 info-play text-left">
+                    <span class="fa fa-toggle-right"></span>
+                  </div>
+                 
+                </li>
+                <li class="underline"></li>
+                <li class="exit"><a>退出登录</a></li>
+              </ul>
+        </ul>
+        <ul class="nav navbar-nav navbar-right warning-box" ng-if="!user">
+          <li style="padding-right:16px;padding-top:5px;">
+            <a ng-click="login()">登录</a></li>                          
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

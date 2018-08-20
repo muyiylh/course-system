@@ -1,0 +1,27 @@
+<div class="forum-list-wrap clearfix">
+	<div class="forum-left-wrap" >
+		<ul>
+			<li ng-class="{active:forumType==1}" ng-click="changeType(1)">
+			<a><i class="icon icon-course"></i>我的课程</a>
+				<ul >
+					<li ng-class="{active:type=='mycourse'}" ng-click="loadData('mycourse')"><a>正在学习</a></li>
+					<li ng-class="{active:type=='overcourse'}" ng-click="loadData('overcourse')"><a>已结课</a></li>
+					
+				</ul>
+			</li>
+			<li ng-class="{active:type=='group'}" ng-click="loadData('group')"><a ><i class="icon icon-group"></i>我的群组</a></li>
+			
+		
+		</ul>
+	</div>
+	<div class="forum-right-wrap" >
+	
+	
+
+		<div class="table-wrap">
+			<div ng-include="getView()"></div>
+		<!-- 
+			<s-pagination conf="cloudConf"></s-pagination> -->
+		</div>
+	</div>
+</div>

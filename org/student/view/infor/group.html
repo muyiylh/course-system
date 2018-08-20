@@ -1,0 +1,42 @@
+<div class="lesson-list">
+		
+		<ul class=" lesson-list clearfix" style="width:{{w}}px">
+
+			<li ng-repeat="course in courses"  ui-sref="course.detail({id:course.id})"  style="width:{{width}}px;height:{{groupLiHeight}}px">
+				<div class="lessonimg-box">
+				
+					<a >
+						<img ng-src="{{course.img}}" class="lessonimg" style="height:{{height}}px" title="course.name" alt="course.name">
+						
+						<!-- <div class="lessonplay" style="">
+							<i class="playericon" jktag="&amp;posGP=103001&amp;posArea=0002&amp;posOper=2004&amp;aCId=3224&amp;posColumn=3224.1"></i>
+						</div> -->
+					</a>
+					<div class="lesson-infor" style="height:{{groupInfoHeight}}px" >
+						<h2 class="lesson-info-h2"><a href="" target="_blank" jktag="">{{course.name}}</a></h2>
+						<p style="text-align:left;" title="{{course.introduce}}">
+							{{course.introduce | cut:true:30:' ...'}}
+						</p>
+				
+					
+						<div class="timeandicon">
+							<div class="cf">
+								<dl>
+									<dd class="mar-b8 dd-left"><em>
+											创建时间{{course.period}}</em>
+									</dd>
+									<dd class="" style="">
+										
+									<em>成员数量{{course.CAI}}人</em>
+									</dd>
+								</dl>		
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</li>
+		
+		</div>
+	</div>
+	 <s-pagination conf="paginationConf"></s-pagination>

@@ -1,0 +1,62 @@
+<div>
+<div class="title" style="font-size:120%;">个人设置</div>
+<div class="tab-group" style="">
+
+        <br> 
+        <form class="form-horizontal" role="form" name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate>
+			
+			<div class="form-group">
+				<label for="inputPassword3" class="col-xs-2 control-label text-right" style="padding-top:12px;">头像</label>
+				<div class="col-xs-4">
+					<img src="images/1.jpg"/>
+					<div class="mask" ngf-select="upload($file)">修改</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail3" class="col-xs-2 control-label text-right">手机号码</label>
+				<div class="col-xs-4">
+					<input type="number" class="form-control" ng-minlength="11" ng-maxlength="11" name="phone" ng-model="phone" placeholder="" required>
+					<p class="error" ng-if="userForm.phone.$error.required &&userForm.phone.$touched">请输入手机号码</p>
+		            <p class="error" ng-if="(userForm.phone.$error.minlength||userForm.phone.$error.maxlength)&&userForm.phone.$touched">手机号码11位</p>
+				</div>
+			</div>
+			
+			<div class="form-group">
+			<div class="col-xs-offset-2 col-xs-10">
+             <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">确定</button>
+			</div>
+			</div>
+		</form>
+ </div>
+ <div class="title" style="font-size:120%;">密码修改</div>
+<div class="tab-group" style="">
+
+        <br> 
+        <form class="form-horizontal" role="form" name="pwdForm" ng-submit="submitPwdForm(pwdForm.$valid)" novalidate>			
+			<div class="form-group">
+				<label for="inputEmail3" class="col-xs-2 control-label text-right">新密码</label>
+				<div class="col-xs-4">
+					<input type="password" name="password" class="form-control" ng-model="password" ng-minlength="6" ng-maxlength="64" required />
+		            <p class="error" ng-if="pwdForm.password.$error.required &&pwdForm.password.$touched">请输入密码</p>
+		            <p class="error" ng-if="(pwdForm.password.$error.minlength||loginForm.password.$error.maxlength)&&pwdForm.password.$touched">密码应在6到64位之间</p>
+				</div>
+			</div>
+			<div class="form-group" >
+				<label for="inputPassword3" class="col-xs-2 control-label text-right">确认密码</label>
+				<div class="col-xs-4">
+					<input type="password" name="password2" class="form-control" ng-model="password2" compare="password" ng-minlength="6" ng-maxlength="64" required>
+		             <p class="error" ng-if="pwdForm.password2.$error.required &&pwdForm.password2.$touched">请输入密码</p>
+		             <p class="error" ng-if="(pwdForm.password2.$error.minlength||pwdForm.password2.$error.maxlength)&&pwdForm.password2.$touched">密码应在6到64位之间</p>
+		            <p class="error" ng-if="pwdForm.password2.$error.compare &&pwdForm.password2.$dirty">两次密码不一致</p>
+				</div>
+		
+			</div>
+			<br>
+			<div class="form-group">
+			<div class="col-xs-offset-2 col-xs-10">
+             <button type="submit" class="btn btn-primary" ng-disabled="pwdForm.$invalid">确定</button>
+			</div>
+			</div>
+		</form>
+ </div>
+</div>

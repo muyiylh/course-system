@@ -1,0 +1,52 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()">
+        <span aria-hidden="true">×</span></button>
+    <h4 class="modal-title">用户登录</h4>
+</div>
+<div class="modal-body">
+
+    <div class="tab-group" style="display: block;width:80%;text-align:center;margin:0 auto;">
+        <form class="passport-form passport-form-sign" id="login-form-popup">
+        <div class="row">
+            <div class="col-md-12" ng-repeat="alert in alerts">
+                <div uib-alert ng-class="'alert-' + (alert.type || 'warning')"
+                     close="alerts.splice($index, 1)">{{alert.msg}}
+                </div>
+            </div>
+        </div>
+            <div class="form-item">
+                <div class="form-cont">
+                    <input type="text" ng-model="uname" class="passport-txt xl w-full" tabindex="1" placeholder="请输入用户名">
+                </div>
+            </div>
+            <div class="form-item">
+                <div class="form-cont">
+                    <input type="password" ng-model="password" class="passport-txt xl w-full" tabindex="2" placeholder="输入密码">
+                </div>
+            </div>
+           
+            <div class="form-item form-sevenday">
+                <div class="form-cont clearfix">
+                   <!--  <label><input type="checkbox" class="passport-sevenday">7天内自动登录</label> -->
+                    <a href="" class="forget-link">忘记密码</a>
+                </div>
+            </div>
+            <div class="form-item">
+                <div class="form-cont">
+                    <input type="button" id="login-pop-submit" class="passport-btn passport-btn-def xl w-full" tabindex="4" ng-click="ok()" value="登录">
+                </div>
+            </div>
+        </form>
+        <br>
+        
+    </div>
+             
+</div>
+<!-- <div class="modal-footer">
+    <button type="button" class="btn btn-default  " data-dismiss="modal" ng-click="close()">
+        取消
+    </button>
+    <button type="button" class="btn btn-primary" ng-click="ok()">
+        确定
+    </button>
+</div> -->

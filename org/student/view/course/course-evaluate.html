@@ -1,0 +1,44 @@
+<div class="ueditor" ready="ready" ng-model="content"></div>
+<ul class="evaluate-box clearfix">
+	<li>
+		<div>内容使用:</div>
+		<div star rating-value="0" max="5" on-hover="onHover1" on-leave="onLeave1" readonly="false"></div> 
+	</li>
+	<li>
+		<div>简洁易懂:</div>
+		<div star rating-value="0" max="5" on-hover="onHover2" on-leave="onLeave2" readonly="false"></div> 
+	</li>
+	<li>
+		<div>逻辑清晰:</div>
+		<div star rating-value="0" max="5" on-hover="onHover3" on-leave="onLeave3" readonly="false"></div> 
+	</li>
+	<li class="right">
+		<input type="button" name="" value="发布评论" class="btn btn-publish" />
+	</li>
+</ul>
+<div class="all-evaluate-box">
+	<div>全部评价</div>
+	<div class="evaluate-info clearfix" ng-repeat="evaluate in evaluates">
+		<div class="avatar"><img ng-src="{{evaluate.avatar}}" /></div>
+		<div class="evaluate-content">
+			<div class="clearfix">
+				<div>{{evaluate.name}}</div>
+				<div star rating-value="evaluate.score" max="5"  readonly="true" ></div>
+			</div>
+			<p>{{evaluate.content}}</p>
+		</div>
+		<div class="right"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;{{evaluate.time}}</div>
+	</div>
+	<!-- <div class="evaluate-info clearfix">
+		<div class="avatar"><img src="images/timg.jpg" /></div>
+		<div class="evaluate-content">
+			<div class="clearfix">
+				<div>小红</div>
+				<div star rating-value="ratingVal" max="max"  readonly="{{readonly}}" ></div>
+			</div>
+			<p>很适合初学者学习</p>
+		</div>
+		<div class="right"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;2015-09-23 03:23</div>
+	</div> -->
+	<s-pagination conf="evaluateConf"></s-pagination>
+</div>

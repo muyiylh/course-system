@@ -1,0 +1,53 @@
+<div class="sider-wrap" ng-style="sideStyle">
+     <div class="title">答题卡</div>
+     <div class="clock">
+         <span class="fa fa-clock-o"></span>
+         <div>时间：<span class="time">17分45秒</span></div>
+     </div>
+     <div class="subject-wrap" ng-repeat="exam in examines.data">
+         <div class="subject-type clearfix">
+             <div class="title">{{exam.title}}</div>
+             <div class="icon"><span class="fa fa-chevron-down"></span></div>
+         </div>
+         <div class="subject-no">
+             <ul class="clearfix">
+                 <li ng-repeat="examNo in exam.data"><a  ng-click="link(exam.examType,examNo.id,1)" class="number_{{exam.examType}}_{{examNo.id}}" ng-init="p_index=$index">{{p_index+1}}</a></li>
+             </ul>
+         </div>
+      </div>
+      <div class="btn-box">
+          <a class="btn" ng-click="submit()">我要交卷</a>
+      </div>
+
+ </div>
+ <div class="content-wrap" ng-style="contentStyle">
+           <div class="title">{{examines.courseTitle}} > {{examines.examTitle}}</div>
+           <div class="exam-box">
+               <div class="exam-content" ng-repeat ="exam in examines.data">
+                   <div class="title" ng-init="parent=$parent">{{exam.title}}({{exam.desc}})</div>
+                   <div class="exam-subject" ng-repeat="subject in exam.data">
+                       <div ng-init="p_index=$index" id="{{exam.examType}}_{{subject.id}}_box1">{{p_index+1}}.{{subject.subject}}</div>
+                       <ul ng-if="exam.examType == 'sigle' ||exam.examType == 'TFNG'">
+                           <li ng-repeat="option in subject.options"><span><input type="radio" name="{{exam.examType}}_{{subject.id}}"  ng-click="checkRadio(exam.examType,subject.id)" value="{{option.id}}" /></span>&nbsp;{{option.name}}</li>
+                       </ul>
+                       <ul ng-if="exam.examType == 'multiple'">
+                           <li ng-repeat="option in subject.options"><span><input type="checkbox" name="{{exam.examType}}_{{subject.id}}" ng-checked="isSelected(exam.examType,subject.id,option.id)" ng-click="updateSelection($event,exam.examType,subject.id,option.id)" value="{{option.id}}"/></span><span class="answer">{{option.name}}</span></li>
+                       </ul>
+                       <ul ng-if="exam.examType == 'filling'">
+                           <li>
+                           <!-- <textarea class="form-control"  name="{{exam.examType}}_{{subject.id}}" value=""></textarea> -->
+                                     <div  class="ueditor" ready="ready" ng-model="parent.filling[subject.id]" config="{toolbars: [['fullscreen', 'source', '|','bold', 'italic', 'underline', '|', 'fontsize', '|', 'kityformula', 'preview']]}"></div>
+                           </li>
+                       </ul>
+                       <ul ng-if="exam.examType == 'SAQ'">
+                           <li ><textarea class="form-control"  name="{{exam.examType}}_{{subject.id}}" value=""></textarea></li>
+                       </ul>
+                   </div>
+               
+               </div>
+              
+           </div>
+           <div class="btn-box" ng-if="examStatus == 'exam'">
+                <a class="btn">我要交卷</a>
+            </div>
+       </div>
